@@ -41,4 +41,26 @@ class Validation extends BaseConfig
     // --------------------------------------------------------------------
     // Rules
     // --------------------------------------------------------------------
+    /**14.08.2025 Marino aggiunge custom rules per utilizzare login solo per nome utente */    
+    public array $login = [
+        'username' => [
+            'label' => 'Auth.username',
+            'rules' => [
+                'required',
+                'max_length[254]',
+                'min_length[3]',
+            ],
+        ],
+        'password' => [
+            'label'  => 'Auth.password',
+            'rules'  => [
+                'required',
+                'max_length[255]'
+            ],
+            'errors' => [
+                'max_byte' => 'Auth.errorPasswordTooLongBytes',
+            ],
+        ],
+
+    ];
 }

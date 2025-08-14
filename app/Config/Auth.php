@@ -241,6 +241,7 @@ class Auth extends ShieldAuth
      *
      * @var array<string, array<int, string>|string>
      */
+    /**14.08.2025 Commento in modo tale che non debba validare anche la mail, utilizzo login solo per nome utente */
     public array $emailValidationRules = [
         'label' => 'Auth.email',
         'rules' => [
