@@ -1,0 +1,114 @@
+/* Custom CSS - MeTe Licenze (pagine secondarie, toni pastello) */
+
+/* Card bianche con shadow leggero */
+.card {
+    background-color: #ffffff; /* sfondo standard BS5 */
+    color: #495057; /* testo principale grigio scuro */
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.status-connection {
+    background: linear-gradient(135deg, #a8e6a3, #4caf50); /* verde chiaro -> verde scuro */
+    font-weight: 600;
+    color: #495057; /* testo grigio scuro */
+    margin-bottom: 0.5rem;
+}
+
+/* Card headers (manteniamo la versione originale) */
+.card-header {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    color: #212529;
+    font-weight: 600;
+    border-radius: 0.75rem 0.75rem 0 0 !important;
+    border: none;
+}
+
+/* Testo secondario leggibile */
+.text-muted {
+    color: #868e96 !important; /* grigio medio pastello */
+}
+
+/* Pulsanti pastello */
+.btn {
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-primary {
+    background-color: #a8dadc;
+    color: #495057;
+}
+
+.btn-primary:hover {
+    background-color: #8ec5c7;
+    color: #495057;
+}
+
+.btn-success {
+    background-color: #c1e1c1;
+    color: #495057;
+}
+
+.btn-success:hover {
+    background-color: #aad9aa;
+    color: #495057;
+}
+
+.btn-warning {
+    background-color: #ffe5a5;
+    color: #495057;
+}
+
+.btn-warning:hover {
+    background-color: #ffdb7d;
+    color: #495057;
+}
+
+/* Scrollable containers (liste tabelle, ecc.) */
+.tables-list-container {
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 8px;
+}
+
+/* Custom scrollbar styling */
+.tables-list-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.tables-list-container::-webkit-scrollbar-track {
+    background: #f8f9fa;
+    border-radius: 3px;
+}
+
+.tables-list-container::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+    transition: background 0.3s ease;
+}
+
+.tables-list-container::-webkit-scrollbar-thumb:hover {
+    background: #a0aec0;
+}
+
+/* Firefox scrollbar */
+.tables-list-container {
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 #f8f9fa;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .card {
+        margin-bottom: 1rem;
+    }
+}

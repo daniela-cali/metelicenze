@@ -11,10 +11,14 @@ service('auth')->routes($routes);
 
 
 $routes->group('database', function($routes) {
-    $routes->get('/', 'DatabaseInfoController::index');
-    $routes->get('doppiodb', 'DatabaseInfoController::doppiodb'); 
-    $routes->get('info', 'DatabaseInfoController::info');
-    $routes->get('fields/(:segment)', 'DatabaseInfoController::getTableFields/$1');
+    $routes->get('/', 'DatabaseInfoController::connectionTest'); 
+    $routes->get('info/(:segment)', 'DatabaseInfoController::info/$1');
+    $routes->get('fields/(:segment)/(:segment)', 'DatabaseInfoController::getTableFields/$1/$2'); 
+    /*
+     * Visualizza i campi di una tabella specifica
+     * Esempio: /database/fields/nome_database/nome_tabella
+     */
+    $routes->get('showlog', 'DatabaseInfoController::showLog');
 });
 
 

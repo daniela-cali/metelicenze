@@ -1,44 +1,63 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="UTF-8">
-    <title><?= esc($title ?? 'Gestione Licenze') ?></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MeTe Licenze</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="<?= base_url('assets/css/custom.css') ?>">
 
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/2dce9b8c56.js" crossorigin="anonymous"></script>
-    <!-- CSS personalizzato -->
-    <link href="<?= base_url('assets/css/custom.css') ?>" rel="stylesheet">
-    <?= $this->renderSection('head') ?>
 </head>
-<body class="bg-light">
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-person shadow-sm">
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="<?= base_url('/') ?>">
-                <img src="<?= base_url('assets/icons/logo.png') ?>" alt="Logo" height="50"> MeTe Licenze
-            </a>
-            
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+            <a class="navbar-brand" href="<?= base_url() ?>">MeTe Licenze</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            
-            <div class="collapse navbar-collapse" id="navbarContent">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('/clienti') ?>"><i class="bi bi-people-fill"></i> Clienti</a>
+                        <a class="nav-link" href="<?= base_url('licenze') ?>">Licenze</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('/licenze') ?>"><i class="bi bi-key-fill"></i> Licenze</a>
+                        <a class="nav-link" href="<?= base_url('versioni') ?>">Versioni</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('/database/info') ?>"><i class="bi bi-database-fill-check"></i> Test DB</a>
+                        <a class="nav-link" href="<?= base_url('aggiornamenti') ?>">Aggiornamenti</a>
                     </li>
+                    <?php if (function_exists('auth') && auth()->loggedIn() && (auth()->user()->inGroup('superadmin')) ): ?>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="databaseDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Database
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="databaseDropdown">
+                                <li><a class="dropdown-item" href="<?= base_url('database/') ?>">Test Connessioni</a></li>
+                                <li><a class="dropdown-item" href="<?= base_url('database/utenti') ?>">Utenti</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="<?= base_url('database/log') ?>">Log Database</a></li>
+                            </ul>
+                        </li>
+                    <?php endif; ?>
+
+                </ul>
+
+                <ul class="navbar-nav">
+                    <?php if (function_exists('auth') && auth()->loggedIn()): ?>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('logout') ?>">Logout</a></li>
+                    <?php else: ?>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('login') ?>">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= base_url('register') ?>">Register</a></li>
+                    <?php endif; ?>
                 </ul>
             </div>
         </div>
@@ -46,27 +65,33 @@
 
     <!-- Contenuto principale -->
     <main>
-        <?php log_message('info', 'Flashdata'.session()->getFlashdata('success'));
-        if (session()->getFlashdata('success') !== NULL): 
-            ?>
+        <!-- Mostra eventuali messaggi di successo o errore -->
+        <?php log_message('info', 'Flashdata' . session()->getFlashdata('success'));
+        if (session()->getFlashdata('success') !== NULL):
+        ?>
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <?php echo session()->getFlashdata('success'); ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-            <?php elseif ((session()->getFlashdata('error') !== NULL)): ?>
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <?php elseif ((session()->getFlashdata('error') !== NULL)): ?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <?php echo session()->getFlashdata('error'); ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         <?php endif; ?>
+        <!-- Renderizza il contenuto della view specifica -->
         <?= $this->renderSection('content') ?>
     </main>
 
     <!-- Bootstrap Bundle -->
+
+    <footer class="bg-dark text-light py-3 text-center mt-5">
+        <small>&copy; <?= date('Y') ?> MeTe Licenze - Tutti i diritti riservati</small>
+    </footer>
+
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.3.2/js/dataTables.bootstrap5.js"></script>
     <?= $this->renderSection('scripts') ?>
 </body>
-</html>
