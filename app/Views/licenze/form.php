@@ -12,40 +12,60 @@
 
         <div class="card-body">
             <!--Aggiungo la modalità di creazione o modifica per il js-->
-            <form action="<?= $action ?>" method="post" data-mode ="<?= $mode ?>">
+            <form action="<?= $action ?>" method="post" data-mode="<?= $mode ?>">
 
                 <div class="mb-3">
                     <label for="codice" class="form-label">Codice Licenza</label>
                     <input type="text" name="codice" id="codice" class="form-control" required placeholder="Es. ABC12345"
-                    value="<?= isset($licenza) ? esc($licenza->id) : '' ?>">
-                </div>
-
-                <div class="mb-3">
-                    <label for="descrizione" class="form-label">Codice</label>
-                    <input type="text" name="descrizione" id="descrizione" class="form-control" rows="3" placeholder="Descrizione della licenza" required
                         value="<?= isset($licenza) ? esc($licenza->codice) : '' ?>">
-                        
                 </div>
 
                 <div class="mb-3">
-                    <label for="tipologia" class="form-label">Tipologia</label>
-                    <select name="tipologia" id="tipologia" class="form-select" required>
+                    <label for="descrizione" class="form-label">Descrizione</label>
+                    <input type="text" name="descrizione" id="descrizione" class="form-control" rows="3" placeholder="Descrizione della licenza" required
+                        value="<?= isset($licenza) ? esc($licenza->descrizione) : '' ?>">
+
+                </div>
+
+                <div class="mb-3">
+                    <label for="natura" class="form-label">Tipo</label>
+                    <select name="tipo" id="tipo" class="form-select" required>
                         <option value="">-- Seleziona --</option>
                         <option value="SI" <?= (isset($licenza) && $licenza->tipo === 'SI') ? 'selected' : '' ?>>Sigla</option>
                         <option value="VA" <?= (isset($licenza) && $licenza->tipo === 'VA') ? 'selected' : '' ?>>VarHub</option>
                         <option value="SK" <?= (isset($licenza) && $licenza->tipo === 'SK') ? 'selected' : '' ?>>SKTN</option>
                     </select>
                 </div>
-
-                <div class="mt-4">
-                    <button type="submit" class="btn btn-success">
-                        <i class="bi bi-check-circle"></i> Salva Licenza
-                    </button>
-                    <a href="<?= previous_url() ?>" class="btn btn-secondary">Annulla</a>
+                <div class="mb-3">
+                    <label for="modello" class="form-label">Modello</label>
+                    <select name="modello" id="modello" class="form-select" required>
+                        <option value="">-- Seleziona --</option>
+                        <option value="S" <?= (isset($licenza) && $licenza->modello === 'S') ? 'selected' : '' ?>>Start</option>
+                        <option value="U" <?= (isset($licenza) && $licenza->modello === 'U') ? 'selected' : '' ?>>Ultimate</option>
+                        <option value="C" <?= (isset($licenza) && $licenza->modello === 'C') ? 'selected' : '' ?>>Cloud</option>
+                        <option value="" <?= (isset($licenza) && empty($licenza->modello)) ? 'selected' : '' ?>>Nessun tipo di modello</option>
+                    </select>
                 </div>
-            </form>
+                <div class="mb-3 form-check">
+                <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="stato"
+                    name="stato"
+                    value="1"
+                    <?= (isset($licenza) && $licenza->stato) ? 'checked' : '' ?>>
+                <label class="form-check-label" for="stato">Licenza attiva</label>
         </div>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-success">
+                <i class="bi bi-check-circle"></i> Salva Licenza
+            </button>
+            <a href="<?= previous_url() ?>" class="btn btn-secondary">Annulla</a>
+        </div>
+        </form>
     </div>
+</div>
 </div>
 <?= $this->endSection() ?>
 <?= $this->section('scripts') ?>

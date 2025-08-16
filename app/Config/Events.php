@@ -35,7 +35,10 @@ Events::on('pre_system', static function (): void {
 
         ob_start(static fn ($buffer) => $buffer);
     }
-
+Events::on('DBQuery', function ($query) {
+    // Scrive ogni query nel log
+    log_message('debug', 'SQL: ' . $query->getQuery());
+});
     /*
      * --------------------------------------------------------------------
      * Debug Toolbar Listeners.

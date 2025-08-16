@@ -1,5 +1,11 @@
 /* Custom CSS - MeTe Licenze (pagine secondarie, toni pastello) */
 
+
+.navbar .logo-navbar {
+    max-height: 50px;   /* Limite massimo per non sforare */
+    width: auto;        /* Mantiene le proporzioni */
+}
+
 /* Card bianche con shadow leggero */
 .card {
     background-color: #ffffff; /* sfondo standard BS5 */

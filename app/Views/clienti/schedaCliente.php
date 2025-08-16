@@ -66,7 +66,8 @@
                                     <th>ID</th>
                                     <th>Codice</th>
                                     <th>Descrizione</th>
-                                    <th>Natura</th>
+                                    <th>Tipo</th>
+                                    <th>Modello</th>
                                     <th>Stato</th>
                                     <th>Azioni</th>
                                 </tr>
@@ -77,7 +78,8 @@
                                         <td><?= esc($licenza->id) ?></td>
                                         <td><?= esc($licenza->codice) ?></td>
                                         <td><?= esc($licenza->descrizione) ?></td>
-                                        <td><?= esc($licenza->natura) ?></td>
+                                        <td><?= esc($licenza->tipo) ?></td>
+                                        <td><?= esc($licenza->modello) ?></td>
                                         <td>
                                             <span class="badge <?= $licenza->stato ? 'bg-success' : 'bg-secondary' ?>">
                                                 <?= $licenza->stato ? 'Attiva' : 'Inattiva' ?>
@@ -143,7 +145,13 @@
                 licenzeRows.forEach(r => r.classList.remove('table-primary', 'selected')); // Rimuovo classe da tutte le righe
                 this.classList.add('table-primary', 'selected'); // Aggiungo classe selected alla riga selezionata per renderla univoca
                 selectedLicenzaId = this.getAttribute('data-id');
-                //console.log('Licenza selezionata ID:', selectedLicenzaId);
+
+            });
+            row.addEventListener('dblclick', function() {
+                const baseUrl = "<?= base_url() ?>";
+                selectedLicenzaId = this.getAttribute('data-id');
+                window.location.href = `${baseUrl}/licenze/modifica/${selectedLicenzaId}`;
+
             });
         });
         tabs.forEach(tab => {

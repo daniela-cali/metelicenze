@@ -63,9 +63,9 @@ class LicenzeController extends BaseController
         // Logica per modificare una licenza
 
         
-        $codice = $this->request->getGet('codice');
         $licenza = $this->LicenzeModel->getLicenzeById($idLicenza);
         $idCliente = $licenza->id_cli_ext; // Ottengo l'ID del cliente associato alla licenza
+        $codice =  $licenza->codice;
         
         return view('licenze/form', [
             'mode' => 'edit',
@@ -95,7 +95,7 @@ class LicenzeController extends BaseController
         if ($idLicenza !== null) {
             $data['id'] = $idLicenza; // Se sto modificando, aggiungo l'ID della licenza
         }
-
+        log_message('info', 'Ricevo questo idcliente: ' . $idCliente . ' e idlicenza: ' . $idLicenza);
         log_message('info', 'Data contiene prima di inviare al model: ' . print_r($data, true));
         // Salvo la licenza nel database
         $this->LicenzeModel->salva($data);

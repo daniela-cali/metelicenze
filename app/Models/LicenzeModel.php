@@ -20,7 +20,9 @@ class LicenzeModel extends Model
         'esistenza_cliente', 
         'natura', 
         'descrizione',
-    ];
+        'tipo',
+        'modello',
+        ];
 
     protected $returnType       = 'object';
     /**
@@ -45,9 +47,9 @@ class LicenzeModel extends Model
 
     public function salva($data)
     {
-        log_message('info', 'Ricevo i seguenti dati: ' . print_r($data,true));
+        log_message('info', 'Ricevo i seguenti dati nel MODEL: ' . print_r($data,true));
 
-        return $this->insert($data); // Restituisce l'ID della nuova licenza
+        return $this->save($data); // Restituisce l'ID della nuova licenza
 
 
     }

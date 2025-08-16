@@ -15,13 +15,19 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="<?= base_url() ?>">MeTe Licenze</a>
+            <a class="navbar-brand d-flex align-items-center" href="<?= base_url() ?>">
+                <img src="<?= base_url('assets/icons/logo.png') ?>" alt="MeTe Licenze" class="logo-navbar me-2">
+                <span>MeTe Licenze</span>
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= base_url('clienti') ?>">Clienti</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<?= base_url('licenze') ?>">Licenze</a>
                     </li>
@@ -31,7 +37,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="<?= base_url('aggiornamenti') ?>">Aggiornamenti</a>
                     </li>
-                    <?php if (function_exists('auth') && auth()->loggedIn() && (auth()->user()->inGroup('superadmin')) ): ?>
+                    <?php if (function_exists('auth') && auth()->loggedIn() && (auth()->user()->inGroup('superadmin'))): ?>
 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="databaseDropdown" role="button"
@@ -66,17 +72,13 @@
     <!-- Contenuto principale -->
     <main>
         <!-- Mostra eventuali messaggi di successo o errore -->
-        <?php log_message('info', 'Flashdata' . session()->getFlashdata('success'));
-        if (session()->getFlashdata('success') !== NULL):
-        ?>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <?php echo session()->getFlashdata('success'); ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        <?php elseif ((session()->getFlashdata('error') !== NULL)): ?>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <?php echo session()->getFlashdata('error'); ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+        <?php if (session()->getFlashdata('success') || session()->getFlashdata('error')): ?>
+            <div class="position-fixed top-0 start-50 translate-middle-x mt-3" style="z-index: 1100; max-width: 400px; width: 90%;">
+                <div class="alert <?= session()->getFlashdata('success') ? 'alert-success' : 'alert-danger' ?> alert-dismissible fade show shadow" role="alert">
+                    <?= session()->getFlashdata('success') ?: session()->getFlashdata('error'); ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
             </div>
         <?php endif; ?>
         <!-- Renderizza il contenuto della view specifica -->
@@ -88,7 +90,18 @@
     <footer class="bg-dark text-light py-3 text-center mt-5">
         <small>&copy; <?= date('Y') ?> MeTe Licenze - Tutti i diritti riservati</small>
     </footer>
-
+    <script>
+        // Dopo 5 secondi chiude automaticamente l'alert se presente
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(function() {
+                const alert = document.querySelector('.alert');
+                if (alert) {
+                    const bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+                    bsAlert.close();
+                }
+            }, 3000);
+        });
+    </script>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>
