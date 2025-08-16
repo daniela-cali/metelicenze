@@ -9,8 +9,22 @@
 </header>
 
 <main class="container my-5">
-    <div class="row g-4">
-        <div class="col-md-4">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-4">
+
+        <!-- Clienti -->
+        <div class="col">
+            <div class="card h-100 text-center shadow-sm border-0">
+                <div class="card-body">
+                    <i class="bi bi-people-fill display-4 text-success"></i>
+                    <h5 class="card-title mt-3">Clienti</h5>
+                    <p class="card-text text-muted">Visualizza e gestisci l’elenco dei clienti.</p>
+                    <a href="<?= base_url('clienti') ?>" class="btn btn-success">Vai ai clienti</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Licenze -->
+        <div class="col">
             <div class="card h-100 text-center shadow-sm border-0">
                 <div class="card-body">
                     <i class="bi bi-key-fill display-4 text-primary"></i>
@@ -20,27 +34,33 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+
+        <!-- Versioni -->
+        <div class="col">
             <div class="card h-100 text-center shadow-sm border-0">
                 <div class="card-body">
-                    <i class="bi bi-code-slash display-4 text-success"></i>
+                    <i class="bi bi-tags-fill display-4 text-secondary"></i>
                     <h5 class="card-title mt-3">Versioni</h5>
-                    <p class="card-text text-muted">Monitora le versioni dei tuoi prodotti software.</p>
-                    <a href="<?= base_url('versioni') ?>" class="btn btn-success">Vai alle versioni</a>
+                    <p class="card-text text-muted">Consulta le versioni disponibili del software.</p>
+                    <a href="<?= base_url('versioni') ?>" class="btn btn-secondary">Vai alle versioni</a>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+
+        <!-- Aggiornamenti -->
+        <div class="col">
             <div class="card h-100 text-center shadow-sm border-0">
                 <div class="card-body">
                     <i class="bi bi-arrow-repeat display-4 text-warning"></i>
                     <h5 class="card-title mt-3">Aggiornamenti</h5>
-                    <p class="card-text text-muted">Tieni traccia degli aggiornamenti rilasciati.</p>
-                    <a href="<?= base_url('aggiornamenti') ?>" class="btn btn-warning text-white">Vai agli aggiornamenti</a>
+                    <p class="card-text text-muted">Gestisci e visualizza gli aggiornamenti disponibili.</p>
+                    <a href="<?= base_url('aggiornamenti') ?>" class="btn btn-warning">Vai agli aggiornamenti</a>
                 </div>
             </div>
         </div>
     </div>
+
+
 </main>
 
 <?php $this->endSection(); ?>

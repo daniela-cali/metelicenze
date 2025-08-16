@@ -3,7 +3,7 @@
 <?= $this->section('content') ?>
 <div class="container my-5">
     <div class="card shadow-sm">
-        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <div class="card-header bg-primary  d-flex justify-content-between align-items-center">
             <h5 class="mb-0"><i class="bi bi-key-fill"></i> <?= esc($title) ?> </h5>
             <a href="<?= previous_url() ?>" class="btn btn-light btn-sm">
                 <i class="bi bi-arrow-left"></i> Indietro
@@ -23,7 +23,7 @@
                 <div class="mb-3">
                     <label for="descrizione" class="form-label">Descrizione</label>
                     <input type="text" name="descrizione" id="descrizione" class="form-control" rows="3" placeholder="Descrizione della licenza" required
-                        value="<?= isset($licenza) ? esc($licenza->tblic_desc) : '' ?>">
+                        value="<?= isset($licenza) ? esc($licenza->descrizione) : '' ?>">
                         
                 </div>
 

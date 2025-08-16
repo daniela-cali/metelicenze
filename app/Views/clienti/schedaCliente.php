@@ -4,10 +4,10 @@
 
 <div class="container mt-4"> <!-- Limita la larghezza -->
     <div class="card shadow-sm">
-        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <div class="card-header bg-primary  d-flex justify-content-between align-items-center">
             <h5 class="mb-0"><i class="bi bi-person-badge"></i> Dettaglio Cliente</h5>
 
-            <a href="/clienti" id="navigation" class="btn btn-outline-light btn-sm">
+            <a href="/clienti" id="navigation" class="btn btn-secondary btn-sm">
                 <i class="bi bi-arrow-left-circle"></i> Torna all’elenco clienti
             </a>
         </div>
@@ -66,30 +66,30 @@
                                     <th>ID</th>
                                     <th>Codice</th>
                                     <th>Descrizione</th>
-                                    <th>Tipo</th>
+                                    <th>Natura</th>
                                     <th>Stato</th>
                                     <th>Azioni</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php foreach ($licenze as $licenza): ?>
-                                    <tr class="licenza-row" data-id="<?= esc($licenza->tblic_id_pk) ?>" style="cursor:pointer;">
-                                        <td><?= esc($licenza->tblic_id_pk) ?></td>
-                                        <td><?= esc($licenza->tblic_cd) ?></td>
-                                        <td><?= esc($licenza->tblic_desc) ?></td>
-                                        <td><?= esc($licenza->tblic_tp) ?></td>
+                                    <tr class="licenza-row" data-id="<?= esc($licenza->id) ?>" style="cursor:pointer;">
+                                        <td><?= esc($licenza->id) ?></td>
+                                        <td><?= esc($licenza->codice) ?></td>
+                                        <td><?= esc($licenza->descrizione) ?></td>
+                                        <td><?= esc($licenza->natura) ?></td>
                                         <td>
-                                            <span class="badge <?= $licenza->tblic_stato === 't' ? 'bg-success' : 'bg-secondary' ?>">
-                                                <?= $licenza->tblic_stato === 't' ? 'Attiva' : 'Inattiva' ?>
+                                            <span class="badge <?= $licenza->stato ? 'bg-success' : 'bg-secondary' ?>">
+                                                <?= $licenza->stato ? 'Attiva' : 'Inattiva' ?>
                                             </span>
                                         </td>
                                         <td>
-                                            <a href="/licenze/visualizza/<?= $licenza->tblic_id_pk ?>" class="btn btn-sm btn-outline-primary" title="Visualizza">
+                                            <a href="/licenze/visualizza/<?= $licenza->id ?>" class="btn btn-sm btn-outline-primary" title="Visualizza">
                                                 <i class="bi bi-eye"></i>
-                                            <a href="/licenze/modifica/<?= $licenza->tblic_id_pk ?>" class="btn btn-sm btn-outline-secondary" title="Modifica">
+                                            <a href="/licenze/modifica/<?= $licenza->id ?>" class="btn btn-sm btn-outline-secondary" title="Modifica">
                                                 <i class="bi bi-pencil"></i>
                                             </a>
-                                            <a href="/licenze/elimina/<?= $licenza->tblic_id_pk ?>" class="btn btn-sm btn-outline-danger" title="Elimina" onclick="return confirm('Sei sicuro di voler eliminare questa licenza?');">
+                                            <a href="/licenze/elimina/<?= $licenza->id ?>" class="btn btn-sm btn-outline-danger" title="Elimina" onclick="return confirm('Sei sicuro di voler eliminare questa licenza?');">
                                                 <i class="bi bi-trash"></i>
                                             </a>
                                         </td>

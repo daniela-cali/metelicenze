@@ -3,7 +3,7 @@
 <?= $this->section('content') ?>
 <div class="container my-5">
     <div class="card shadow-sm">
-        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <div class="card-header bg-primary  d-flex justify-content-between align-items-center">
             <h5 class="mb-0"><i class="bi bi-key-fill"></i> <?= esc($title) ?> </h5>
             <a href="<?= previous_url() ?>" class="btn btn-light btn-sm">
                 <i class="bi bi-arrow-left"></i> Indietro
@@ -17,13 +17,13 @@
                 <div class="mb-3">
                     <label for="codice" class="form-label">Codice Licenza</label>
                     <input type="text" name="codice" id="codice" class="form-control" required placeholder="Es. ABC12345"
-                    value="<?= isset($licenza) ? esc($licenza->tblic_cd) : '' ?>">
+                    value="<?= isset($licenza) ? esc($licenza->id) : '' ?>">
                 </div>
 
                 <div class="mb-3">
-                    <label for="descrizione" class="form-label">Descrizione</label>
+                    <label for="descrizione" class="form-label">Codice</label>
                     <input type="text" name="descrizione" id="descrizione" class="form-control" rows="3" placeholder="Descrizione della licenza" required
-                        value="<?= isset($licenza) ? esc($licenza->tblic_desc) : '' ?>">
+                        value="<?= isset($licenza) ? esc($licenza->codice) : '' ?>">
                         
                 </div>
 
@@ -31,9 +31,9 @@
                     <label for="tipologia" class="form-label">Tipologia</label>
                     <select name="tipologia" id="tipologia" class="form-select" required>
                         <option value="">-- Seleziona --</option>
-                        <option value="SI" <?= (isset($licenza) && $licenza->tblic_tp === 'SI') ? 'selected' : '' ?>>Sigla</option>
-                        <option value="VA" <?= (isset($licenza) && $licenza->tblic_tp === 'VA') ? 'selected' : '' ?>>VarHub</option>
-                        <option value="SK" <?= (isset($licenza) && $licenza->tblic_tp === 'SK') ? 'selected' : '' ?>>SKTN</option>
+                        <option value="SI" <?= (isset($licenza) && $licenza->tipo === 'SI') ? 'selected' : '' ?>>Sigla</option>
+                        <option value="VA" <?= (isset($licenza) && $licenza->tipo === 'VA') ? 'selected' : '' ?>>VarHub</option>
+                        <option value="SK" <?= (isset($licenza) && $licenza->tipo === 'SK') ? 'selected' : '' ?>>SKTN</option>
                     </select>
                 </div>
 

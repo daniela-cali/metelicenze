@@ -2,7 +2,7 @@
 <?= $this->section('content') ?>
 <div class="container my-5">
     <div class="card shadow-sm">
-        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <div class="card-header bg-primary d-flex justify-content-between align-items-center">
             <h5 class="mb-0"><i class="bi bi-people"></i> Elenco Clienti</h5>
 
         </div>

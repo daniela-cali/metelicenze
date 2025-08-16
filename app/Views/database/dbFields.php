@@ -41,10 +41,11 @@
                 <h2>Genera $allowedFields</h2>
                 <p>Di seguito il codice per generare l'array <code>$allowedFields</code>:</p>
                 <?php
-                echo '<pre>$allowedFields = [';
+                echo '<pre> protected $allowedFields = ['; 
+                echo "\n";
 
                 foreach ($allowed_fields as $field) {
-                    echo "'" . esc(trim($field)) . "', \n ";
+                    echo "      '" . esc(trim($field)) . "', \n ";
                 }
                 echo "];</pre>";
                 ?>
