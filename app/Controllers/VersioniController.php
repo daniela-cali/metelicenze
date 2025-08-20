@@ -1,0 +1,50 @@
+<?php
+
+namespace App\Controllers;
+
+use App\Controllers\BaseController;
+use CodeIgniter\HTTP\ResponseInterface;
+
+class VersioniController extends BaseController
+{
+    protected $VersioniModel;
+    public function __construct()
+    {
+        $this->VersioniModel = new \App\Models\VersioniModel();
+    }
+
+    public function index()
+    {
+        $data['versioni'] = $this->VersioniModel->getVersioni();
+        $data['title'] = 'Elenco Versioni';
+
+        return view('versioni/index', $data);
+    }
+    public function crea()
+    {
+        return view('versioni/form', [
+            'mode' => 'create',
+            'action' => base_url('/versioni/salva'), // Non ha ancora ID
+            'versione' => null, // Non abbiamo una versione esistente da modificare
+            'title' => 'Crea Nuova Versione',
+        ]);
+    }
+    public function salva($idVersione = null)
+    {
+        // Logica per salvare la versione
+        // Se $idVersione è null, stiamo creando una nuova versione
+        // Altrimenti, stiamo modificando una versione esistente
+        $data = $this->request->getPost();
+        log_message('info', 'Dati ricevuti per il salvataggio: ' . print_r($data, true));
+        //echo "Dati ricevuti: ";
+        //print_r($data); 
+        $this->VersioniModel->save($data);
+        if ($this->VersioniModel->errors()) {
+            // Se ci sono errori, li mostriamo
+            return redirect()->back()->withInput()->with('errors', $this->VersioniModel->errors());
+        }
+        // Se non ci sono errori, reindirizziamo alla lista delle versioni
+        return redirect()->to('/versioni')->with('success', 'Versione salvata con successo!');
+        
+    }   
+}

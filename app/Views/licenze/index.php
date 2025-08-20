@@ -17,9 +17,9 @@
                         <thead class="table-light">
                             <tr>
                                 <th>ID Licenza</th>
-                                <th>Nome Licenza</th>
+                                <th>Codice</th>
+                                <th>Descrizione</th>                               
                                 <th>Tipo</th>
-                                <th>Descrizione</th>
                                 <th>ID Cliente</th>
                                 <th>Stato</th>
                                 <th>Azioni</th>
@@ -29,12 +29,12 @@
                             <?php foreach ($licenze as $licenza): ?>
                                 <tr>
                                     <td><?= esc($licenza->id) ?></td>
-                                    <td><?= esc($licenza->nome_licenza) ?></td>
-                                    <td><?= esc($licenza->tipo) ?></td>
+                                    <td><?= esc($licenza->codice) ?></td>
                                     <td><?= esc($licenza->descrizione) ?></td>
-                                    <td><?= esc($licenza->id_cliente) ?></td>
+                                    <td><?= esc($licenza->tipo) ?></td>
+                                    <td><?= esc($licenza->id_cli_ext) ?></td>
                                     <td>
-                                        <?php if ($licenza->stato == 't'): ?>
+                                        <?php if ($licenza->stato): ?>
                                             <span class="badge bg-success">Attiva</span>
                                         <?php else: ?>
                                             <span class="badge bg-secondary"><?= esc(ucfirst($licenza->stato)) ?></span>

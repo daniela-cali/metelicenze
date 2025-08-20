@@ -3,7 +3,7 @@
 
 <header class="bg-light py-5 text-center">
     <div class="container">
-        <h1 class="display-4 fw-bold">Benvenuto in MeTe Licenze</h1>
+        <h1 class="display-4 fw-bold">Benvenuto in <?= esc($siteName) ?></h1>
         <p class="lead text-muted">Gestisci in modo semplice licenze, versioni e aggiornamenti software</p>
     </div>
 </header>

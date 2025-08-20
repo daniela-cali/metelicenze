@@ -30,7 +30,9 @@ class ClientiController extends BaseController
 
     public function schedaCliente($id)
     {
-
+        log_message('info', 'Path di provenienza:' . current_url());
+        $session = session();
+        $session->set('backTo', current_url()); // Salvo il path di provenienza nella sessione
         $data['cliente'] = $this->ClientiModel->getClientiById($id);
         $data['licenze'] = $this->LicenzeModel->getLicenzeByCliente($id);
 

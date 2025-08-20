@@ -40,10 +40,21 @@ $routes->group('licenze', function($routes) {
 
 $routes->group('aggiornamenti', function($routes) {
     $routes->get('crea/(:num)', 'AggiornamentiController::crea/$1');
+    $routes->get('index/(:num)', 'AggiornamentiController::getByLicenza/$1');
+    $routes->post('salva/(:num)', 'AggiornamentiController::salva/$1'); // Salva aggiornamento per IDLicenza
+});
+$routes->group('versioni', function($routes) {
+    $routes->get('/', 'VersioniController::index');
+    $routes->get('crea', 'VersioniController::crea');
+    $routes->get('modifica/(:num)', 'VersioniController::modifica/$1');
+    $routes->get('elimina/(:num)', 'VersioniController::elimina/$1');
+    $routes->get('visualizza/(:num)', 'VersioniController::visualizza/$1');
+    $routes->post('salva/(:num)', 'VersioniController::salva/$1'); // Salva versione per IDVersione
+    $routes->post('salva', 'VersioniController::salva'); // Salva nuova versione
 });
 
-$routes->group('api', function($routes) {
-    $routes->get('aggiornamenti/licenza/(:num)', 'AggiornamentiController::jsonByLicenza/$1');
-    
+$routes->group('admin', function($routes) {
+    $routes->get('settings', 'Admin\SettingsController::index');
+    $routes->post('settings/save', 'Admin\SettingsController::save');
 
- });
+});

@@ -23,7 +23,7 @@ class LicenzeModel extends Model
         'tipo',
         'modello',
         ];
-
+    protected $useTimestamps    = true;
     protected $returnType       = 'object';
     /**
      * Genera l'elenco delle licenze
@@ -47,6 +47,7 @@ class LicenzeModel extends Model
 
     public function salva($data)
     {
+        
         log_message('info', 'Ricevo i seguenti dati nel MODEL: ' . print_r($data,true));
 
         return $this->save($data); // Restituisce l'ID della nuova licenza

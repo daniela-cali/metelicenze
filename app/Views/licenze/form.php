@@ -46,15 +46,15 @@
                         <option value="" <?= (isset($licenza) && empty($licenza->modello)) ? 'selected' : '' ?>>Nessun tipo di modello</option>
                     </select>
                 </div>
+
                 <div class="mb-3 form-check">
+                    <label class="form-check-label" class="form-label" for="stato">Licenza attiva</label>
                 <input
                     type="checkbox"
                     class="form-check-input"
                     id="stato"
-                    name="stato"
-                    value="1"
-                    <?= (isset($licenza) && $licenza->stato) ? 'checked' : '' ?>>
-                <label class="form-check-label" for="stato">Licenza attiva</label>
+                    name="stato"                   
+                    <?php if (isset($licenza) && $licenza->stato) echo 'checked'; ?>>
         </div>
 
         <div class="mt-4">

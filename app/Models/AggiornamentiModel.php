@@ -6,36 +6,29 @@ use CodeIgniter\Model;
 
 class AggiornamentiModel extends Model
 {
-    protected $table            = 'nrg.tblicagg';
-    protected $primaryKey       = 'tblicagg_id_pk';
+    protected $table            = 'aggiornamenti';
+    protected $primaryKey       = 'id';
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields = ['tblicagg_id_pk', 
-                                'tblicagg_tblic_id', 
-                                'tblicagg_versione', 
-                                'tblicagg_tblicvers_id', 
-                                'tblicagg_note', 
-                                'tblicagg_dt_agg', 
-                                'tblicagg_stato', 
-                                'tblicagg_dtvar', 
-                                'tblicagg_tyute_id', 
-                                'tblicagg_tyazi_id', 
-                                'tblicagg_tbdep_id', 
-                                ];
-
+    protected $allowedFields = [
+        'licenze_id',
+        'versioni_id',
+        'note',
+        'dt_agg',
+        'stato',
+    ];
 
 
     protected $useTimestamps = true;
-    protected $createdField  = 'tblicagg_dt_agg';
-    protected $updatedField  = 'tblicagg_dtvar';
+    protected $createdField  = 'created_at';
+    protected $updatedField  = 'updated_at';
 
     function getByLicenza($id_licenza)
     {
         log_message('info', 'AggiornamentiModel::getByLicenza - ID Licenza: ' . $id_licenza);
-        return $this->where('tblicagg_tblic_id', $id_licenza)
-            ->orderBy('tblicagg_dt_agg', 'DESC')
+        return $this->where('licenze_id', $id_licenza)
+            ->orderBy('dt_agg', 'DESC')
             ->findAll();
     }
-    
 }

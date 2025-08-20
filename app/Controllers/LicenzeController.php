@@ -87,6 +87,8 @@ class LicenzeController extends BaseController
     {
         // Se non è fornito un ID cliente, non posso salvare la licenza
         $data = $this->request->getPost(); // Prende tutti i campi del form
+        $stato = $this->request->getPost('stato') ? 1 : 0; // Converte lo stato in booleano
+        $data['stato'] = $stato; // Aggiungo lo stato al
         if ($idCliente === null) {
             return redirect()->back()->with('error', 'Selezionare un cliente!.');
         } else{
@@ -96,7 +98,7 @@ class LicenzeController extends BaseController
             $data['id'] = $idLicenza; // Se sto modificando, aggiungo l'ID della licenza
         }
         log_message('info', 'Ricevo questo idcliente: ' . $idCliente . ' e idlicenza: ' . $idLicenza);
-        log_message('info', 'Data contiene prima di inviare al model: ' . print_r($data, true));
+        log_message('info', 'Data contiene questo prima di inviare al model ->salva: ' . print_r($data, true));
         // Salvo la licenza nel database
         $this->LicenzeModel->salva($data);
 

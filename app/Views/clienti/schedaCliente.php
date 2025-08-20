@@ -86,14 +86,14 @@
                                             </span>
                                         </td>
                                         <td>
-                                            <a href="/licenze/visualizza/<?= $licenza->id ?>" class="btn btn-sm btn-outline-primary" title="Visualizza">
-                                                <i class="bi bi-eye"></i>
-                                            <a href="/licenze/modifica/<?= $licenza->id ?>" class="btn btn-sm btn-outline-secondary" title="Modifica">
-                                                <i class="bi bi-pencil"></i>
-                                            </a>
-                                            <a href="/licenze/elimina/<?= $licenza->id ?>" class="btn btn-sm btn-outline-danger" title="Elimina" onclick="return confirm('Sei sicuro di voler eliminare questa licenza?');">
-                                                <i class="bi bi-trash"></i>
-                                            </a>
+                                            <a href="/aggiornamenti/crea/<?= $licenza->id ?>" class="btn btn-sm btn-outline-primary" title="Crea Aggiornamento">
+                                                <i class="bi bi-clock-history"></i>
+                                                <a href="/licenze/modifica/<?= $licenza->id ?>" class="btn btn-sm btn-outline-secondary" title="Modifica">
+                                                    <i class="bi bi-pencil"></i>
+                                                </a>
+                                                <a href="/licenze/elimina/<?= $licenza->id ?>" class="btn btn-sm btn-outline-danger" title="Elimina" onclick=" return confirm('Sei sicuro di voler eliminare questa licenza?');">
+                                                    <i class="bi bi-trash"></i>
+                                                </a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -145,6 +145,7 @@
                 licenzeRows.forEach(r => r.classList.remove('table-primary', 'selected')); // Rimuovo classe da tutte le righe
                 this.classList.add('table-primary', 'selected'); // Aggiungo classe selected alla riga selezionata per renderla univoca
                 selectedLicenzaId = this.getAttribute('data-id');
+                console.log('Licenza selezionata ID:', selectedLicenzaId);
 
             });
             row.addEventListener('dblclick', function() {
@@ -179,26 +180,18 @@
                             document.querySelector('#tabella-aggiornamenti tbody').innerHTML = '<tr><td colspan="2" class="text-center">Seleziona una licenza per vederne gli aggiornamenti.</td></tr>';
                             return;
                         } else {
-                            fetch(`/api/aggiornamenti/licenza/${selectedLicenzaId}`)
-                                .then(res => res.json())
-                                .then(data => {
-                                    tabAggContentBody.innerHTML = '';
-
-                                    if (data.length === 0) {
-                                        tabAggContentBody.innerHTML = '<tr><td colspan="2" class="text-center">Nessun aggiornamento disponibile per questa licenza.</td></tr>';
-                                        return;
+                            fetch(`/aggiornamenti/index/${selectedLicenzaId}`)
+                                .then(response => {
+                                    if (!response.ok) {
+                                        throw new Error('Errore nel caricamento degli aggiornamenti');
                                     }
-
-                                    data.forEach(agg => {
-                                        tabAggContentBody.innerHTML += `
-                                            <tr>
-                                                <td>${agg.data}</td>
-                                                <td>${agg.descrizione}</td>
-                                            </tr>
-                                    `;
-                                    });
+                                    return response.text(); //Ricevo il contenuto HTML
                                 })
-                                .catch(err => {
+                                .then(html => {
+                                    console.log('HTML ricevuto:', html);
+                                    tabAggContentBody.innerHTML = html; // Inserisco direttamente il contenuto HTML nel tbody
+                                })
+                                .catch(err => { //Intercetto errori
                                     tabAggContentBody.innerHTML = '<tr><td colspan="2" class="text-danger text-center">Errore nel caricamento aggiornamenti.</td></tr>';
                                     console.error(err);
                                 });
@@ -210,6 +203,5 @@
             });
         });
     });
-
 </script>
 <?php $this->endSection(); ?>

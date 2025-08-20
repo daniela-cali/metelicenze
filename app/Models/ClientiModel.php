@@ -23,12 +23,14 @@ class ClientiModel extends Model
 
     protected $table            = 'nrg.v_tbcf_tbana';
     protected $primaryKey       = 'tbana_id_pk';
-    
+
     protected $returnType       = 'object';
 
 public function __construct()
     {
+        // Eredito il costruttore della classe Model
         parent::__construct();
+        // Inizializzo i campi transcodificati
         $this->setFieldTranscoding($this->fieldTranscoding);
     }
 
@@ -41,6 +43,7 @@ public function __construct()
             }
         }
     }
+    
     /**
      * Genera l'elenco dei clienti
      */
