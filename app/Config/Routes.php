@@ -39,9 +39,11 @@ $routes->group('licenze', function($routes) {
 });
 
 $routes->group('aggiornamenti', function($routes) {
-    $routes->get('crea/(:num)', 'AggiornamentiController::crea/$1');
     $routes->get('index/(:num)', 'AggiornamentiController::getByLicenza/$1');
-    $routes->post('salva/(:num)', 'AggiornamentiController::salva/$1'); // Salva aggiornamento per IDLicenza
+    $routes->get('crea/(:num)', 'AggiornamentiController::crea/$1');
+    $routes->get('modifica/(:num)', 'AggiornamentiController::modifica/$1');
+    $routes->get('visualizza/(:num)', 'AggiornamentiController::visualizza/$1'); // Visualizza aggiornamento per ID
+    $routes->post('salva/(:num)', 'AggiornamentiController::salva/$1'); // Salva aggiornamento per ID
 });
 $routes->group('versioni', function($routes) {
     $routes->get('/', 'VersioniController::index');

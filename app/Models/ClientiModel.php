@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class ClientiModel extends Model
 {
-    protected $DBGroup          = 'external'; 
+    protected $DBGroup          = 'external';
     protected $transcoding = true; // Abilita la transcodifica dei campi
     protected $transcodingArray = [
         'tbcf_cd' => 'codice_cliente',
@@ -26,43 +26,39 @@ class ClientiModel extends Model
 
     protected $returnType       = 'object';
 
-public function __construct()
-    {
-        // Eredito il costruttore della classe Model
-        parent::__construct();
-        // Inizializzo i campi transcodificati
-        $this->setFieldTranscoding($this->fieldTranscoding);
-    }
 
-    public function setFieldTranscoding($transcoding)
+    protected function initialize()
     {
-
-        if ($this->transcoding) {
-            foreach ($this->transcodingArray as $dbField => $transcodedField) {
-                $this->transcodedFields .= "$dbField as $transcodedField, ";
+         if ($this->transcoding) {
+            $fields = [];
+            foreach ($this->transcodingArray as $dbField => $alias) {
+                $fields[] = "$dbField as $alias";
             }
+            $this->transcodedFields = implode(', ', $fields);
         }
+
     }
-    
+
+
     /**
      * Genera l'elenco dei clienti
      */
 
-public function getClienti()
-{
-    return $this->select($this->transcodedFields)
-        ->orderBy('tbana_ragsoc1', 'ASC')
-        ->where('tbcf_tp', 'C')
-        ->findAll();
-}
+    public function getClienti()
+    {
+        return $this->select($this->transcodedFields)
+            ->orderBy('tbana_ragsoc1', 'ASC')
+            ->where('tbcf_tp', 'C')
+            ->findAll();
+    }
 
-public function getClientiById($id)
-{
-    return $this->select($this->transcodedFields)
-        ->orderBy('tbana_ragsoc1', 'ASC')
-        ->where('tbcf_tp', 'C')
-        ->where('tbana_id_pk', $id)
-        ->first();
-}
+    public function getClientiById($id)
+    {
 
+        return $this->select($this->transcodedFields)
+            ->orderBy('tbana_ragsoc1', 'ASC')
+            ->where('tbcf_tp', 'C')
+            ->where('tbana_id_pk', $id)
+            ->first();
+    }
 }

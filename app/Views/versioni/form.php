@@ -22,12 +22,12 @@
 
                 <div class="mb-3">
                     <label for="codice" class="form-label">Codice</label>
-                    <input type="text" name="codice" id="codice" class="form-control" rows="3" placeholder="Codice della licenza" required
+                    <input type="text" name="codice" id="codice" class="form-control" rows="3" placeholder="Codice della versione" required
                         value="<?= isset($versione) ? esc($versione->codice) : '' ?>">
                 </div>
                 <div class="mb-3">
                     <label for="release" class="form-label">Release</label>
-                    <input type="text" name="release" id="release" class="form-control" rows="3" placeholder="Release della licenza" required
+                    <input type="text" name="release" id="release" class="form-control" rows="3" placeholder="Release della versione" required
                         value="<?= isset($versione) ? esc($versione->release) : '' ?>">
                 </div>
                 <div class="mb-3">

@@ -40,6 +40,22 @@ class ClientiController extends BaseController
 
         return view('clienti/schedaCliente', $data);
     }
+
+    public function clientiFilters()
+    {
+        $tipoLicenza = $this->request->getPost('tipoLicenza');
+        if ($tipoLicenza) {
+            
+        }
+
+
+        return view('clienti/form', [
+            'mode' => 'view',
+            'cliente' => $cliente,
+            'action' => '',
+            'title' => 'Dettagli Cliente ' . esc($cliente->nome),
+        ]);
+    }
 }
 
 /*
