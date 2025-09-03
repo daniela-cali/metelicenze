@@ -10,7 +10,7 @@ $routes->get('/', 'HomeController::index');
 service('auth')->routes($routes);
 
 
-$routes->group('database', ['filter' => 'session'], function($routes) {
+$routes->group('database', ['filter' => 'group:superadmin,admin'], function($routes) {
     $routes->get('/', 'DatabaseInfoController::connectionTest'); 
     $routes->get('info/(:segment)', 'DatabaseInfoController::info/$1');
     $routes->get('fields/(:segment)/(:segment)', 'DatabaseInfoController::getTableFields/$1/$2'); 
