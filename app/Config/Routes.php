@@ -10,7 +10,7 @@ $routes->get('/', 'HomeController::index');
 service('auth')->routes($routes);
 
 
-$routes->group('database', function($routes) {
+$routes->group('database', ['filter' => 'session'], function($routes) {
     $routes->get('/', 'DatabaseInfoController::connectionTest'); 
     $routes->get('info/(:segment)', 'DatabaseInfoController::info/$1');
     $routes->get('fields/(:segment)/(:segment)', 'DatabaseInfoController::getTableFields/$1/$2'); 
@@ -23,12 +23,12 @@ $routes->group('database', function($routes) {
 
 
 
-$routes->group('clienti', function($routes) {
+$routes->group('clienti', ['filter' => 'session'], function($routes) {
     $routes->get('/', 'ClientiController::index');
     $routes->get('schedaCliente/(:num)', 'ClientiController::schedaCliente/$1');
  });
 
-$routes->group('licenze', function($routes) {
+$routes->group('licenze', ['filter' => 'session'], function($routes) {
     $routes->get('/', 'LicenzeController::index');
     $routes->get('crea/(:num)', 'LicenzeController::crea/$1'); // Nuova licenza per IDCliente
     $routes->get('modifica/(:num)', 'LicenzeController::modifica/$1');
@@ -45,7 +45,7 @@ $routes->group('aggiornamenti', function($routes) {
     $routes->get('visualizza/(:num)', 'AggiornamentiController::visualizza/$1'); // Visualizza aggiornamento per ID
     $routes->post('salva/(:num)', 'AggiornamentiController::salva/$1'); // Salva aggiornamento per ID
 });
-$routes->group('versioni', function($routes) {
+$routes->group('versioni', ['filter' => 'session'], function($routes) {
     $routes->get('/', 'VersioniController::index');
     $routes->get('crea', 'VersioniController::crea');
     $routes->get('modifica/(:num)', 'VersioniController::modifica/$1');
