@@ -8,20 +8,32 @@ use CodeIgniter\HTTP\ResponseInterface;
 class LicenzeController extends BaseController
 {
     protected $LicenzeModel;
+    protected $AggiornamentiModel;
     protected $ClientiModel;
     public function __construct()
     {
         $this->LicenzeModel = new \App\Models\LicenzeModel();
+        //$this->LicenzeModel = new \App\Models\AggiornamentiModel();
         $this->ClientiModel = new \App\Models\ClientiModel();
     }
 
     public function index()
     {
-        $data['licenze'] = $this->LicenzeModel->getLicenze();
+        $licenze = $this->LicenzeModel->getLicenze();
+        $clienti = $this->ClientiModel->getInfoClienti();
+        //$aggiornamenti = $this->AggiornamentiModel->getLastAggiornamenti();
+        foreach ($licenze as $licenza) {
+            // Trova il cliente corrispondente per ogni licenza
+            $cliente = array_filter($clienti, fn($c) => $c->id === $licenza->id_cli_ext);
+            $licenza->clienteNome = $cliente ? array_values($cliente)[0]->nome : 'Cliente non trovato';
+            $licenza->clienteId = $cliente ? array_values($cliente)[0]->id : null;           
+        }
+        $data['licenze'] = $licenze;
         $data['title'] = 'Elenco Licenze';
 
         return view('licenze/index', $data);
     }
+
 
     public function visualizza($idLicenza)
     {
@@ -43,18 +55,15 @@ class LicenzeController extends BaseController
             return redirect()->back()->with('error', 'Selezionare un cliente!.');
         }
 
-        $data['id_cliente'] = $idCliente;
-        $data['title'] = 'Crea Licenza per IDCliente ' . esc($idCliente);
+            $data['mode'] = 'create';
+            $data['action'] = base_url('/licenze/salva/' . $idCliente); //Essendo nel crea la licenza non ha ancora ID
+            $data['id_cliente'] = $idCliente;
+            $data['cliente'] = $this->ClientiModel->getClientiById($idCliente);
+            $data['licenza'] = null; 
+            $data['title'] = 'Crea Licenza per Cliente ' . esc($data['cliente']->nome) . ' [ID: ' . esc($idCliente) . ']';
 
 
-
-        return view('licenze/form', [
-            'mode' => 'create',
-            'action' => base_url('/licenze/salva/' . $idCliente), //Essendo nel crea la licenza non ha ancora ID
-            'id_cliente' => $idCliente,
-            'licenza' => null, // Non abbiamo una licenza esistente da modificare
-            'title' => $data['title'],
-        ]);
+        return view('licenze/form', $data);
     }
 
     public function modifica($idLicenza)
@@ -104,8 +113,6 @@ class LicenzeController extends BaseController
         // Redirect o mostra un messaggio di successo
         return redirect()->to('clienti/schedaCliente/' . $idCliente)->with('success', 'Licenza salvata con successo.');
     }
-
-
 
     public function elimina($idLicenza)
     {

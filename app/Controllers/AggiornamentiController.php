@@ -20,10 +20,10 @@ class AggiornamentiController extends BaseController
 
     public function getByLicenza($idLicenza)
     {
-
+        log_message('info', 'AggiornamentiController::getByLicenza - ID Licenza: ' . $idLicenza);
         $aggiornamenti = $this->AggiornamentiModel->getByLicenza($idLicenza);
 
-        //log_message('info', 'AggiornamentiController::getByLicenza - Aggiornamenti ' . print_r($aggiornamenti, true));
+        log_message('info', 'AggiornamentiController::getByLicenza - Aggiornamenti ' . print_r($aggiornamenti, true));
         $data['aggiornamenti'] = $aggiornamenti;
         $data['title'] = 'Aggiornamenti per Licenza ' . esc($idLicenza);
         //log_message('info', 'Data prima della view ' . print_r($data, true));
@@ -46,6 +46,7 @@ class AggiornamentiController extends BaseController
     }
     public function crea($idLicenza = null)
     {
+        log_message('info', 'AggiornamentiController::crea - ID Licenza: ' . $idLicenza);
         // Se non è fornito un ID licenza, non posso creare un aggiornamento
         if ($idLicenza === null) {
             return redirect()->back()->with('error', 'Selezionare una licenza!.');
@@ -59,19 +60,22 @@ class AggiornamentiController extends BaseController
         $data['mode'] = 'create'; // Modalità di creazione
         $data['aggiornamento'] = null; // Non abbiamo un aggiornamento esistente da modificare
         $data['backTo'] = $this->backTo; // Aggiungo il path di provenienza per il bottone indietro 
+        log_message('info', 'AggiornamentiController::crea - Dati prima della view ' . print_r($data, true));
 
         return view('aggiornamenti/form', $data);
     }
 
     public function salva($idLicenza = null) {
-
+        log_message('info', 'AggiornamentiController::salva - ID Licenza: ' . $idLicenza);
         $data = $this->request->getPost(); // Prende tutti i campi del form
+        log_message('info', 'AggiornamentiController::salva - Dati ricevuti: ' . print_r($data, true));
         $stato = $this->request->getPost('stato') ? 1 : 0; // Converte lo stato in booleano
-        $data['stato'] = $stato; // Aggiungo lo stato al
         // Se non è fornito un ID licenza, non posso salvare l'aggiornamento
         if ($idLicenza === null) {
             return redirect()->back()->with('error', 'Selezionare una licenza!.');
         }
+        $data['licenze_id'] = $idLicenza; // Associa l'aggiornamento alla licenza
+        $data['stato'] = $stato; // Aggiungo lo stato 
         
 
   
@@ -79,7 +83,6 @@ class AggiornamentiController extends BaseController
 
         // Salvataggio dell'aggiornamento
         $this->AggiornamentiModel->save($data);
-        $backTo = session()->get('backTo') ?? base_url('/clienti'); // Recupera il path di provenienza dalla sessione o usa un default'
         return redirect()->redirect($this->backTo)->with('success', 'Aggiornamento salvato con successo!');    
     }
 

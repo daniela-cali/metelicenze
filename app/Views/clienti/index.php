@@ -1,7 +1,7 @@
 <?= $this->extend('layouts/main') ?>
 <?= $this->section('content') ?>
 <div class="container my-5">
-<form method="post" action="">
+<form method="get" action="">
     <div class="card mb-3">
         <div class="card-header">
             <i class="bi bi-search"></i>
@@ -11,6 +11,7 @@
             <div>
                 <label for="filterLicenza" class="form-label">Licenza</label>
                 <select id="filterLicenza" name="tipoLicenza" class="form-select w-auto">
+                    <option disabled selected value>--Tutti i clienti --</option>
                     <option value="SI">Licenza Sigla</option>
                     <option value="VA">Licenza VarHub</option>
                     <option value="SK">Licenza SKNT</option>
@@ -63,25 +64,22 @@
                                     <td><?= esc($cliente->email) ?></td>
                                     <td><?= esc($cliente->telefono) ?></td>
                                     <td><?= esc($cliente->citta) ?></td>
-                                    <td></td>
 
-                                    <!--<td>
-                                        <? //php if ($cliente->licenze_attive > 0): 
+
+                                    <td>
+                                        <?php if ($cliente->numLicenze > 0): 
                                         ?>
-                                            <span class="badge bg-success"><? //php $cliente->licenze_attive 
-                                                                            ?> attive</span>
-                                        <? //php else: 
+                                            <span class="badge bg-success">
+                                                <?php echo $cliente->numLicenze?> attive</span>
+                                        <?php else: 
                                         ?>
                                             <span class="badge bg-secondary">Nessuna</span>
-                                        <? //php endif; 
+                                        <?php endif; 
                                         ?>
-                                    </td>-->
+                                    </td>
                                     <td>
                                         <a href="/clienti/schedaCliente/<?= $cliente->id ?>" class="btn btn-sm btn-outline-primary" title="Scheda Cliente">
                                             <i class="bi bi-person-vcard"></i>
-                                        </a>
-                                        <a href="/licenze/nuova/<?= $cliente->id ?>" class="btn btn-sm btn-outline-primary" title="Crea Licenza per il cliente">
-                                            <i class="bi bi-key-fill"></i>
                                         </a>
 
                                     </td>
@@ -107,9 +105,8 @@
                 url: 'https://cdn.datatables.net/plug-ins/2.3.2/i18n/it-IT.json',
             },
             responsive: true,
-            order: [
-                [0, 'asc']
-            ],
+            order: [],
+   
             columnDefs: [{
                 targets: 5,
                 orderable: true,

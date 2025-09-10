@@ -55,4 +55,26 @@ class AggiornamentiModel extends Model
 
         return $aggiornamento;
     }
+    function getLastAggiornamenti()
+    {
+        $ultimiAggiornamenti = $this->select('MAX(dt_agg) as ultimo_aggiornamento, licenze_id as licenza_id, versioni_id as versione_id, versioni.codice AS versione_codice, licenze.codice AS licenza_codice')
+                ->join('versioni', 'versioni.id = aggiornamenti.versioni_id', 'left')
+                ->join('licenze', 'licenze.id = aggiornamenti.licenze_id', 'left')
+                ->groupBy('licenze_id')
+                ->findAll();
+        log_message('info', 'Ultimi aggiornamenti raw: ' . print_r($ultimiAggiornamenti, true));
+        //$ids = array_map(fn($a) => $a->dt_agg, $ultimiAggiornamenti);
+        //log_message('info', 'Ultimi aggiornamenti IDs: ' . print_r($ids, true));
+        /*$aggioJoin = $this->select('aggiornamenti.*, versioni.codice AS versione, licenze.id AS licenzaId, licenze.codice AS licenzaCodice')
+            ->join('versioni', 'versioni.id = aggiornamenti.versioni_id', 'left')
+            ->join('licenze', 'licenze.id = aggiornamenti.licenze_id', 'left')
+            ->orderBy('aggiornamenti.dt_agg', 'DESC')
+            ->findAll(); 
+        log_message('info', 'Ultimi aggiornamenti dettagliati: ' . print_r($aggioJoin, true));*/
+
+        $data['test'] = $ultimiAggiornamenti;
+        return $data;
+    }
+
+
 }

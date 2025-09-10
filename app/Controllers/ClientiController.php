@@ -20,9 +20,27 @@ class ClientiController extends BaseController
 
     public function index()
     {
+        $tipoLicenza = $this->request->getGet('tipoLicenza');
+        if ($tipoLicenza) {
+            $idClientiPerLicenza = $this->LicenzeModel->getLicenzeByTipo($tipoLicenza);
+            log_message('info', 'Clienti con licenza di tipo ' . $tipoLicenza . ': ' . print_r($idClientiPerLicenza, true));
+            $ids = array_map(fn($licenza) => $licenza->id_cli_ext, $idClientiPerLicenza);
+            /*$ids = [];
+            foreach ($idClientiPerLicenza as $licenza) {
+                $ids[] = $licenza->id_cli_ext;
+            }*/
+            //$results = array_keys(array_column($idClientiPerLicenza, null, 'id_cli_ext'));
+            if (count($idClientiPerLicenza) >0) $data['clienti'] = $this->ClientiModel->getClientiByIds($ids);
+            else $data['clienti'] = [];
+            log_message('info', 'Clienti filtrati: ' . print_r($data['clienti'], true));
+        } else {
+            $data['clienti'] = $this->ClientiModel->getClienti();
+        }
+        $licenzeCount = $this->countLicenzeByCliente();
 
-
-        $data['clienti'] = $this->ClientiModel->getClienti();
+        foreach ($data['clienti'] as $cliente) {
+            $cliente->numLicenze = $licenzeCount[$cliente->id] ?? 0;
+        }
         $data['title'] = 'Elenco Clienti';
 
         return view('clienti/index', $data);
@@ -41,20 +59,28 @@ class ClientiController extends BaseController
         return view('clienti/schedaCliente', $data);
     }
 
-    public function clientiFilters()
+    public function __clientiFilters()
     {
         $tipoLicenza = $this->request->getPost('tipoLicenza');
-        if ($tipoLicenza) {
-            
+        echo "Tipo licenza selezionato: " . $tipoLicenza;
+        /*if ($tipoLicenza) {
         }
-
-
         return view('clienti/form', [
             'mode' => 'view',
             'cliente' => $cliente,
             'action' => '',
             'title' => 'Dettagli Cliente ' . esc($cliente->nome),
-        ]);
+        ]);*/
+    }
+
+    public function countLicenzeByCliente()
+    {
+        $rows =  $this->LicenzeModel
+            ->select('id_cli_ext, COUNT(id) AS numLicenze')
+            ->groupBy('id_cli_ext')
+            ->findAll();
+        $result = array_column($rows, 'numLicenze', 'id_cli_ext');
+        return $result;
     }
 }
 

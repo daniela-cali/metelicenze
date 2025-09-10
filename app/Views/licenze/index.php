@@ -20,7 +20,7 @@
                                 <th>Codice</th>
                                 <th>Descrizione</th>                               
                                 <th>Tipo</th>
-                                <th>ID Cliente</th>
+                                <th>Cliente</th>
                                 <th>Stato</th>
                                 <th>Azioni</th>
                             </tr>
@@ -32,7 +32,7 @@
                                     <td><?= esc($licenza->codice) ?></td>
                                     <td><?= esc($licenza->descrizione) ?></td>
                                     <td><?= esc($licenza->tipo) ?></td>
-                                    <td><?= esc($licenza->id_cli_ext) ?></td>
+                                    <td><?= esc($licenza->clienteNome) ?></td>
                                     <td>
                                         <?php if ($licenza->stato): ?>
                                             <span class="badge bg-success">Attiva</span>

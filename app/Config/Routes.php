@@ -21,9 +21,14 @@ $routes->group('database', ['filter' => 'group:superadmin,admin'], function($rou
     $routes->get('showlog', 'DatabaseInfoController::showLog');
 });
 
-
+$routes->group('filters', ['filter' => 'session'], function($routes) {
+    $routes->get('/', 'FiltersController::index');
+    $routes->post('apply', 'FiltersController::applyFilters');
+    $routes->get('clear', 'FiltersController::clearFilters');
+ });
 
 $routes->group('clienti', ['filter' => 'session'], function($routes) {
+    $routes->post('filters', 'ClientiController::clientiFilters');
     $routes->get('/', 'ClientiController::index');
     $routes->get('schedaCliente/(:num)', 'ClientiController::schedaCliente/$1');
  });
@@ -59,4 +64,10 @@ $routes->group('admin', function($routes) {
     $routes->get('settings', 'Admin\SettingsController::index');
     $routes->post('settings/save', 'Admin\SettingsController::save');
 
+});
+$routes->get('aggiornamentiModel/(:segment)', 'TestController::aggiornamentiModel/$1', ['filter' => 'session']);
+$routes->group('test', function($routes) {
+    $routes->get('aggiornamentiModel/(:segment)', '');
+    $routes->get('log', 'TestController::logTestMessage');
+    $routes->get('db', 'TestController::testDatabaseConnection');
 });

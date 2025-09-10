@@ -26,27 +26,50 @@ class ClientiModel extends Model
 
     protected $returnType       = 'object';
 
-
+    /**
+     * Inizializza il modello e prepara i campi transcodificati
+     */
     protected function initialize()
     {
-         if ($this->transcoding) {
+        if ($this->transcoding) {
             $fields = [];
             foreach ($this->transcodingArray as $dbField => $alias) {
                 $fields[] = "$dbField as $alias";
             }
             $this->transcodedFields = implode(', ', $fields);
         }
-
     }
 
-
     /**
-     * Genera l'elenco dei clienti
+     * Genera l'elenco di tutti i clienti
      */
 
     public function getClienti()
     {
         return $this->select($this->transcodedFields)
+            ->orderBy('tbana_ragsoc1', 'ASC')
+            ->where('tbcf_tp', 'C')
+            ->findAll();
+    }
+
+    /**
+     * Genera l'elenco dei clienti dato un array di ID
+     */
+    public function getClientiByIds($idClienti)
+    {
+        return $this->select($this->transcodedFields)
+            ->orderBy('tbana_ragsoc1', 'ASC')
+            ->where('tbcf_tp', 'C')
+            ->whereIn('tbana_id_pk', $idClienti)
+            ->findAll();
+    }
+
+    /**
+     * Recupera un cliente dato il suo ID
+     */
+    public function getInfoClienti()
+    {
+        return $this->select('tbana_id_pk as id, tbana_ragsoc1 as nome')
             ->orderBy('tbana_ragsoc1', 'ASC')
             ->where('tbcf_tp', 'C')
             ->findAll();

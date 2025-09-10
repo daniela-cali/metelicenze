@@ -1,6 +1,7 @@
 <?= $this->extend('layouts/main') ?>
 
 <?= $this->section('content') ?>
+
 <div class="container my-5">
     <div class="card shadow-sm">
         <div class="card-header bg-primary  d-flex justify-content-between align-items-center">
@@ -54,7 +55,7 @@
                     class="form-check-input"
                     id="stato"
                     name="stato"                   
-                    <?php if (isset($licenza) && $licenza->stato) echo 'checked'; ?>>
+                    <?php if (!isset($licenza) || $licenza->stato) echo 'checked'; ?>>
         </div>
 
         <div class="mt-4">

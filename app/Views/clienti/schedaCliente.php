@@ -188,7 +188,6 @@
                                     return response.text(); //Ricevo il contenuto HTML
                                 })
                                 .then(html => {
-                                    console.log('HTML ricevuto:', html);
                                     tabAggContentBody.innerHTML = html; // Inserisco direttamente il contenuto HTML nel tbody
                                 })
                                 .catch(err => { //Intercetto errori

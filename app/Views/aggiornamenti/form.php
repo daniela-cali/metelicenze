@@ -14,7 +14,7 @@
             <!--Aggiungo la modalità di creazione o modifica per il js-->
             <form action="<?= $action ?>" method="post" data-mode="<?= $mode ?>">
                 <input type="hidden" name="id" value="<?= isset($aggiornamento->id) ? esc($aggiornamento->id) : '' ?>">
-                <input type="hidden" name="licenze_id" value="<?= isset($aggiornamento->licenze_id) ? esc($aggiornamento->licenze_id) : '' ?>">
+
                 <div class="mb-3">
                     <label for="dt_agg" class="form-label">Data Aggiornamento</label>
                     <input type="date" name="dt_agg" id="dt_agg" class="form-control" required 
