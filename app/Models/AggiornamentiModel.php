@@ -57,6 +57,7 @@ class AggiornamentiModel extends Model
     }
     function getLastAggiornamenti()
     {
+        log_message('info', 'AggiornamentiModel::getLastAggiornamenti - Recupero ultimi aggiornamenti per licenza');
         $ultimiAggiornamenti = $this->select('MAX(dt_agg) as ultimo_aggiornamento, licenze_id as licenza_id, versioni_id as versione_id, versioni.codice AS versione_codice, licenze.codice AS licenza_codice')
                 ->join('versioni', 'versioni.id = aggiornamenti.versioni_id', 'left')
                 ->join('licenze', 'licenze.id = aggiornamenti.licenze_id', 'left')
@@ -72,8 +73,8 @@ class AggiornamentiModel extends Model
             ->findAll(); 
         log_message('info', 'Ultimi aggiornamenti dettagliati: ' . print_r($aggioJoin, true));*/
 
-        $data['test'] = $ultimiAggiornamenti;
-        return $data;
+
+        return $ultimiAggiornamenti;
     }
 
 

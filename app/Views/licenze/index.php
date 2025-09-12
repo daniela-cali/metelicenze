@@ -21,6 +21,8 @@
                                 <th>Descrizione</th>                               
                                 <th>Tipo</th>
                                 <th>Cliente</th>
+                                <th>Data Ult. Agg.</th>
+                                <th>Versione attuale</th>
                                 <th>Stato</th>
                                 <th>Azioni</th>
                             </tr>
@@ -33,6 +35,8 @@
                                     <td><?= esc($licenza->descrizione) ?></td>
                                     <td><?= esc($licenza->tipo) ?></td>
                                     <td><?= esc($licenza->clienteNome) ?></td>
+                                    <td><?= date('d/m/Y', strtotime($licenza->ultimoAggiornamento)) ?></td>
+                                    <td><?= esc($licenza->versioneUltimoAggiornamento) ?></td>
                                     <td>
                                         <?php if ($licenza->stato): ?>
                                             <span class="badge bg-success">Attiva</span>

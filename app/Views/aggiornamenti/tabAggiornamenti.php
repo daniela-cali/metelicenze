@@ -31,8 +31,10 @@
              <?php endforeach; ?>
          </tbody>
      </table>
- <?php else: ?>
-     <div class="alert alert-warning">
-         <i class="bi bi-exclamation-triangle"></i> Nessun aggiornamento associato a questa licenza.
+ <?php else: ?>    
+        <td colspan="2" class="text-center bg-warning bg-gradient">
+            <i class="bi bi-exclamation-triangle"></i>
+            Nessun Aggiornamento per questa licenza.
+        </td>
      </div>
  <?php endif; ?>

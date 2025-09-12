@@ -177,7 +177,7 @@
                         let tabAggContentBody = document.querySelector('#tabella-aggiornamenti tbody');
                         tabAggContentBody.innerHTML = ''; // Pulisce il contenuto della tabella
                         if (!selectedLicenzaId) {
-                            document.querySelector('#tabella-aggiornamenti tbody').innerHTML = '<tr><td colspan="2" class="text-center">Seleziona una licenza per vederne gli aggiornamenti.</td></tr>';
+                            document.querySelector('#tabella-aggiornamenti tbody').innerHTML = '<tr><td colspan="2" class="text-center bg-warning bg-gradient"> Seleziona una licenza per vederne gli aggiornamenti.</td></tr>';
                             return;
                         } else {
                             fetch(`/aggiornamenti/index/${selectedLicenzaId}`)

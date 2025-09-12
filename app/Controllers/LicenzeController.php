@@ -13,7 +13,7 @@ class LicenzeController extends BaseController
     public function __construct()
     {
         $this->LicenzeModel = new \App\Models\LicenzeModel();
-        //$this->LicenzeModel = new \App\Models\AggiornamentiModel();
+        $this->AggiornamentiModel = new \App\Models\AggiornamentiModel();
         $this->ClientiModel = new \App\Models\ClientiModel();
     }
 
@@ -21,12 +21,17 @@ class LicenzeController extends BaseController
     {
         $licenze = $this->LicenzeModel->getLicenze();
         $clienti = $this->ClientiModel->getInfoClienti();
-        //$aggiornamenti = $this->AggiornamentiModel->getLastAggiornamenti();
+        $aggiornamenti = $this->AggiornamentiModel->getLastAggiornamenti();
+        log_message('info', 'LicenzeController::Aggiornamenti recenti: ' . print_r($aggiornamenti, true));
         foreach ($licenze as $licenza) {
             // Trova il cliente corrispondente per ogni licenza
             $cliente = array_filter($clienti, fn($c) => $c->id === $licenza->id_cli_ext);
+            $ultimo_agg = array_filter($aggiornamenti, fn($a) => $a->licenza_id === $licenza->id);
             $licenza->clienteNome = $cliente ? array_values($cliente)[0]->nome : 'Cliente non trovato';
             $licenza->clienteId = $cliente ? array_values($cliente)[0]->id : null;           
+            $licenza->ultimoAggiornamento = $ultimo_agg ? array_values($ultimo_agg)[0]->ultimo_aggiornamento : 'N/A';
+            $licenza->versioneUltimoAggiornamento = $ultimo_agg ? array_values($ultimo_agg)[0]->versione_codice : 'N/A';
+
         }
         $data['licenze'] = $licenze;
         $data['title'] = 'Elenco Licenze';
