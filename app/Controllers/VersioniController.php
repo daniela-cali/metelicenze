@@ -20,6 +20,18 @@ class VersioniController extends BaseController
 
         return view('versioni/index', $data);
     }
+
+    public function visualizza($idVersione)
+    {
+        $versione = $this->VersioniModel->getLicenzeById($idVersione);
+        return view('versioni/form', [
+            'mode' => 'view',
+            'action' => '', // Nessuna azione in visualizzazione
+            'versione' => null, // Non abbiamo una versione esistente da modificare
+            'title' => 'Dettagli Versione ' . esc($versione->codice),
+        ]);
+    }
+
     public function crea()
     {
         return view('versioni/form', [
@@ -29,6 +41,22 @@ class VersioniController extends BaseController
             'title' => 'Crea Nuova Versione',
         ]);
     }
+
+    public function modifica($idVersione)
+    {
+        $versione = $this->VersioniModel->find($idVersione);
+        if (!$versione) {
+            return redirect()->to('/versioni')->with('error', 'Versione non trovata.');
+        }
+
+        return view('versioni/form', [
+            'mode' => 'edit',
+            'action' => base_url('/versioni/salva/' . $idVersione),
+            'versione' => $versione,
+            'title' => 'Modifica Versione ' . esc($versione->codice),
+        ]);
+    }
+
     public function salva($idVersione = null)
     {
         // Logica per salvare la versione
@@ -45,6 +73,15 @@ class VersioniController extends BaseController
         }
         // Se non ci sono errori, reindirizziamo alla lista delle versioni
         return redirect()->to('/versioni')->with('success', 'Versione salvata con successo!');
-        
-    }   
+    }
+    public function elimina($idVersione)
+    {
+        $versione = $this->VersioniModel->find($idVersione);
+        if (!$versione) {
+            return redirect()->to('/versioni')->with('error', 'Versione non trovata.');
+        }
+
+        $this->VersioniModel->delete($idVersione);
+        return redirect()->to('/versioni')->with('success', 'Versione eliminata con successo.');
+    }
 }

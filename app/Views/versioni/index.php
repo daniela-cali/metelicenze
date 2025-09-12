@@ -38,7 +38,7 @@
                                         <?php endif; ?>
                                     </td>
                                     <td>
-                                        <a href="/versioni/schedaVersione/<?= $versione->id ?>" class="btn btn-sm btn-outline-primary" title="Scheda versione">
+                                        <a href="/versioni/visualizza/<?= $versione->id ?>" class="btn btn-sm btn-outline-primary" title="Scheda versione">
                                             <i class="bi bi-person-vcard"></i>
                                         </a>
                                         <a href="/versioni/modifica/<?= $versione->id ?>" class="btn btn-sm btn-outline-secondary" title="Modifica versione">
