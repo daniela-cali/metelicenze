@@ -44,7 +44,7 @@
             <?php if (!empty($clienti)): ?>
 
                 <div class="table-responsive">
-                    <table class="table table-striped table-hover align-middle" id="clientiTable">
+                    <table class="table table-striped table-hover align-middle datatable" id="clientiTable">
                         <thead class="table-light">
                             <tr>
                                 <th>Codice cliente</th>
@@ -99,27 +99,6 @@
 <?= $this->endSection() ?>
 <?= $this->section('scripts') ?>
 <script>
-    $(document).ready(function() {
-        var table = new DataTable('#clientiTable', {
-            language: {
-                url: 'https://cdn.datatables.net/plug-ins/2.3.2/i18n/it-IT.json',
-            },
-            responsive: true,
-            order: [],
-   
-            columnDefs: [{
-                targets: 5,
-                orderable: true,
-                searchable: true
-            }],
-            paging: true,
-            pageLength: 20,
-            lengthChange: false,
-            info: true,
-            searching: true,
-            autoWidth: false,
 
-        });
-    });
 </script>
 <?= $this->endSection() ?>

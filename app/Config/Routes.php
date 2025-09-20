@@ -19,21 +19,25 @@ $routes->group('database', ['filter' => 'group:superadmin,admin'], function($rou
      * Esempio: /database/fields/nome_database/nome_tabella
      */
     $routes->get('showlog', 'DatabaseInfoController::showLog');
+    $routes->get('utenti', 'UsersController::index');
+        $routes->get('utenti/(:num)/edit', 'UsersController::edit/$1');// modifica
+    $routes->post('utenti/(:num)/update', 'UsersController::update/$1');
+    $routes->get('utenti/(:num)/delete', 'UsersController::delete/$1');
 });
 
-$routes->group('filters', ['filter' => 'session'], function($routes) {
+$routes->group('filters', ['filter' => 'notpending'], function($routes) {
     $routes->get('/', 'FiltersController::index');
     $routes->post('apply', 'FiltersController::applyFilters');
     $routes->get('clear', 'FiltersController::clearFilters');
  });
 
-$routes->group('clienti', ['filter' => 'session'], function($routes) {
+$routes->group('clienti', ['filter' => 'notpending'], function($routes) {
     $routes->post('filters', 'ClientiController::clientiFilters');
     $routes->get('/', 'ClientiController::index');
     $routes->get('schedaCliente/(:num)', 'ClientiController::schedaCliente/$1');
  });
 
-$routes->group('licenze', ['filter' => 'session'], function($routes) {
+$routes->group('licenze', ['filter' => 'notpending'], function($routes) {
     $routes->get('/', 'LicenzeController::index');
     $routes->get('crea/(:num)', 'LicenzeController::crea/$1'); // Nuova licenza per IDCliente
     $routes->get('modifica/(:num)', 'LicenzeController::modifica/$1');
@@ -43,14 +47,14 @@ $routes->group('licenze', ['filter' => 'session'], function($routes) {
     $routes->post('salva/(:num)/(:num)/', 'LicenzeController::salva/$1/$2'); // Salva licenza per IDCliente e IDLicenza   
 });
 
-$routes->group('aggiornamenti', function($routes) {
+$routes->group('aggiornamenti',['filter' => 'notpending'], function($routes) {
     $routes->get('index/(:num)', 'AggiornamentiController::getByLicenza/$1');
     $routes->get('crea/(:num)', 'AggiornamentiController::crea/$1');
     $routes->get('modifica/(:num)', 'AggiornamentiController::modifica/$1');
     $routes->get('visualizza/(:num)', 'AggiornamentiController::visualizza/$1'); // Visualizza aggiornamento per ID
     $routes->post('salva/(:num)', 'AggiornamentiController::salva/$1'); // Salva aggiornamento per ID
 });
-$routes->group('versioni', ['filter' => 'session'], function($routes) {
+$routes->group('versioni', ['filter' => 'notpending'], function($routes) {
     $routes->get('/', 'VersioniController::index');
     $routes->get('crea', 'VersioniController::crea');
     $routes->get('modifica/(:num)', 'VersioniController::modifica/$1');
@@ -71,3 +75,6 @@ $routes->group('test', function($routes) {
     $routes->get('log', 'TestController::logTestMessage');
     $routes->get('db', 'TestController::testDatabaseConnection');
 });
+
+
+$routes->get('account-pending', 'AccountController::pending');

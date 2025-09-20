@@ -23,11 +23,11 @@ class VersioniController extends BaseController
 
     public function visualizza($idVersione)
     {
-        $versione = $this->VersioniModel->getLicenzeById($idVersione);
+        $versione = $this->VersioniModel->getVersioneById($idVersione);
         return view('versioni/form', [
             'mode' => 'view',
             'action' => '', // Nessuna azione in visualizzazione
-            'versione' => null, // Non abbiamo una versione esistente da modificare
+            'versione' => $versione, // Non abbiamo una versione esistente da modificare
             'title' => 'Dettagli Versione ' . esc($versione->codice),
         ]);
     }

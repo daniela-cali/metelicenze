@@ -9,7 +9,7 @@
 </header>
 
 <main class="container my-5">
-    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-4">
+    <div class="row g-4">
 
         <!-- Clienti -->
         <div class="col">
@@ -47,17 +47,6 @@
             </div>
         </div>
 
-        <!-- Aggiornamenti -->
-        <div class="col">
-            <div class="card h-100 text-center shadow-sm border-0">
-                <div class="card-body">
-                    <i class="bi bi-arrow-repeat display-4 text-warning"></i>
-                    <h5 class="card-title mt-3">Aggiornamenti</h5>
-                    <p class="card-text text-muted">Gestisci e visualizza gli aggiornamenti disponibili.</p>
-                    <a href="<?= base_url('aggiornamenti') ?>" class="btn btn-warning">Vai agli aggiornamenti</a>
-                </div>
-            </div>
-        </div>
     </div>
 
 

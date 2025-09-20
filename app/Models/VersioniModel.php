@@ -39,6 +39,12 @@ class VersioniModel extends Model
             ->findAll();    
     }
 
+    public function getVersioneById($idVersione)
+    {
+        return $this->orderBy('dt_rilascio', 'DESC')
+            ->where('id', $idVersione)
+            ->first();    
+    }
 
 
 }

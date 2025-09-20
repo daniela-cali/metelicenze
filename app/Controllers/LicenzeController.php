@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
-
+helper('decoding');
 class LicenzeController extends BaseController
 {
     protected $LicenzeModel;
@@ -19,6 +19,7 @@ class LicenzeController extends BaseController
 
     public function index()
     {
+
         $licenze = $this->LicenzeModel->getLicenze();
         $clienti = $this->ClientiModel->getInfoClienti();
         $aggiornamenti = $this->AggiornamentiModel->getLastAggiornamenti();
@@ -31,6 +32,8 @@ class LicenzeController extends BaseController
             $licenza->clienteId = $cliente ? array_values($cliente)[0]->id : null;           
             $licenza->ultimoAggiornamento = $ultimo_agg ? array_values($ultimo_agg)[0]->ultimo_aggiornamento : 'N/A';
             $licenza->versioneUltimoAggiornamento = $ultimo_agg ? array_values($ultimo_agg)[0]->versione_codice : 'N/A';
+            $licenza->tipo = decodingTipo($licenza->tipo);
+            $licenza->modello = decodingModello($licenza->modello);
 
         }
         $data['licenze'] = $licenze;
@@ -52,7 +55,7 @@ class LicenzeController extends BaseController
             'title' => 'Dettagli Licenza ' . esc($licenza->codice),
         ]);
     }
-    
+
     public function crea($idCliente = null)
     {
 

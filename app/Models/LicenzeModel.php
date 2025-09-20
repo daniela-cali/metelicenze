@@ -28,6 +28,13 @@ class LicenzeModel extends Model
     /**
      * Genera l'elenco delle licenze
      */
+    //protected $afterFind = ['decodeLicenza'];
+
+    public function __construct()
+    {
+        parent::__construct();
+        helper('decoding'); // carica app/Helpers/decoding_helper.php
+    }
     public function getLicenze()
     {
         return $this->select('*')
@@ -63,5 +70,24 @@ class LicenzeModel extends Model
         return $this->save($data); // Restituisce l'ID della nuova licenza
 
 
+    }
+    protected function decodeLicenza(array $data)
+    {
+        log_message('info', 'LicenzeModel::decodeLicenza - Dati prima della decodifica: ' . print_r($data, true));
+        /*if (isset($data['data'])) {
+            // caso singolo oggetto
+            if (is_object($data['data'])) {
+                $data['data']->tipo    = decodingTipo($data['data']->tipo);
+                $data['data']->modello = decodingModello($data['data']->modello);
+            }
+            // caso array di oggetti
+            elseif (is_array($data['data'])) {
+                foreach ($data['data'] as &$row) {
+                    $row->tipo    = decodingTipo($row->tipo);
+                    $row->modello = decodingModello($row->modello);
+                }
+            }
+        }
+        return $data;*/
     }
 }

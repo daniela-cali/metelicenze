@@ -29,6 +29,7 @@ class AggiornamentiController extends BaseController
         //log_message('info', 'Data prima della view ' . print_r($data, true));
         return view('aggiornamenti/tabAggiornamenti', $data);
     }
+    
    public function visualizza($idAggiornamento)
     {
         // Logica per visualizzare i dettagli di una licenza

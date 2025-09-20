@@ -26,7 +26,7 @@
                         value="<?= isset($versione) ? esc($versione->codice) : '' ?>">
                 </div>
                 <div class="mb-3">
-                    <label for="release" class="form-label">Release</label>
+                    <label for="release" class="form-label">Release della versione</label>
                     <input type="text" name="release" id="release" class="form-control" rows="3" placeholder="Release della versione" required
                         value="<?= isset($versione) ? esc($versione->release) : '' ?>">
                 </div>

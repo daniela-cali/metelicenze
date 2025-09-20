@@ -118,3 +118,16 @@
         margin-bottom: 1rem;
     }
 }
+
+/* Rimuove eventuale sfondo grigio residuo */
+.dt-button {
+    background: transparent !important;
+    background-image: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Usa le classi Bootstrap */
+.dt-button.btn {
+    background-color: transparent !important;
+}

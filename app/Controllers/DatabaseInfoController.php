@@ -173,8 +173,6 @@ class DatabaseInfoController extends BaseController
     }
 
 
-
-
     public function info($connectionGroup = 'default')
     {
         log_message('info', 'Richiesta informazioni per il database: ' . $connectionGroup);
