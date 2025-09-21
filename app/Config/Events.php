@@ -6,6 +6,7 @@ use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\HotReloader\HotReloader;
 use CodeIgniter\Shield\Entities\User;
+
 helper('html'); // per poter usare esc()
 /*
  * --------------------------------------------------------------------
@@ -34,12 +35,12 @@ Events::on('pre_system', static function (): void {
             ob_end_flush();
         }
 
-        ob_start(static fn ($buffer) => $buffer);
+        ob_start(static fn($buffer) => $buffer);
     }
-Events::on('DBQuery', function ($query) {
-    // Scrive ogni query nel log
-    log_message('debug', 'SQL: ' . $query->getQuery());
-});
+    Events::on('DBQuery', function ($query) {
+        // Scrive ogni query nel log
+        log_message('debug', 'SQL: ' . $query->getQuery());
+    });
     /*
      * --------------------------------------------------------------------
      * Debug Toolbar Listeners.
@@ -68,48 +69,30 @@ Events::on('DBQuery', function ($query) {
 Events::on('register', static function (User $user) {
     $user->addGroup('pending');
     $email = Services::email();
-    log_message('info', 'Evento register catturato per utente: ' . $user->email);
 
-    // Mittente (se non impostato in Config/Email.php)
-    $email->setFrom('noreply@mete-licenze.it', 'MeTe Licenze');
+    // Mittente (Impostato in Config/Email.php)
 
     // Destinatario: admin
-    $email->setTo('nhildra.morwen@gmail.com');
+    $admin = config('SiteConfig')->adminEmail;
+    $email->setTo($admin);
     $email->setSubject('Nuova registrazione utente su MeTe Licenze');
 
     // Corpo HTML dell’email
-    $message = '
-        <html>
-        <head>
-            <style>
-                body { font-family: Arial, sans-serif; }
-                .container { padding: 20px; }
-                .header { font-size: 18px; font-weight: bold; margin-bottom: 15px; }
-                .details { background: #f8f9fa; padding: 10px; border: 1px solid #dee2e6; border-radius: 5px; }
-                .details p { margin: 0 0 5px; }
-                .footer { margin-top: 20px; font-size: 12px; color: #6c757d; }
-            </style>
-        </head>
-        <body>
-            <div class="container">
-                <div class="header">📩 Nuovo utente registrato</div>
-                <p>Un nuovo utente si è appena registrato su <strong>MeTe Licenze</strong>. Ecco i dettagli:</p>
-                <p>Proviene da IP: ' . esc($_SERVER['REMOTE_ADDR'] ?? 'N/A') . '</p>
-                <p>Autorizzare utente se necessario.</p>
-                <div class="details">
-                    <p><strong>Username:</strong> ' . esc($user->username) . '</p>
-                    <p><strong>Email:</strong> ' . esc($user->email) . '</p>
-                    <p><strong>Registrato il:</strong> ' . date('d/m/Y H:i') . '</p>
-                </div>
-                <div class="footer">
-                    Questo è un messaggio automatico generato da MeTe Licenze.
-                </div>
-            </div>
-        </body>
-        </html>
-    ';
-
+    $content = "
+        <p>Un nuovo utente si è appena registrato su <strong>MeTe Licenze</strong>. Ecco i dettagli:</p>
+        <p>Proviene da IP: " . esc($_SERVER['REMOTE_ADDR'] ?? 'N/A') . "</p>
+        <p>Autorizzare utente se necessario.</p>
+        <div class=\"details\">
+            <p><strong>Username:</strong> ' . esc($user->username) . '</p>
+            <p><strong>Email:</strong> ' . esc($user->email) . '</p>
+            <p><strong>Registrato il:</strong> ' . date('d/m/Y H:i') . '</p>
+        </div>";
+    $message = view('emails/layout', [
+        'title'   => 'Nuova registrazione utente su MeTe Licenze',
+        'content' => $content
+    ]);
     $email->setMessage($message);
+
     $email->setMailType('html'); // fondamentale per HTML
 
     if (! $email->send()) {
@@ -119,4 +102,3 @@ Events::on('register', static function (User $user) {
         log_message('info', 'Notifica inviata a admin per nuova registrazione utente: ' . $user->email);
     }
 });
-

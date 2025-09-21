@@ -38,7 +38,7 @@ class Email extends BaseConfig
     /**
      * SMTP Password (App Password generata da Google, NON la password normale!)
      */
-    public string $SMTPPass = 'izxzkmunpwfhvghx';
+    public string $SMTPPass = 'yncfewpotxgbwdbv';
 
     /**
      * SMTP Port (465 con SSL, oppure 587 con TLS)

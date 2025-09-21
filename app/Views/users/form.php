@@ -51,7 +51,6 @@
                       value="<?= $group ?>"
                       id="group_<?= esc($value["title"]) ?>"
                       <?= isset($user->groups) && in_array($group, $user->groups) ? 'checked' : '' ?>
-                      <?= $mode === 'show' ? 'disabled' : '' ?>>
                     <label class="form-check-label" for="group_<?= esc($value["title"]) ?>">
                       <?= esc($value["title"]) ?>
                     </label>

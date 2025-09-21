@@ -8,4 +8,6 @@ class SiteConfig extends BaseConfig
 {
     public string $siteName = 'MeTe Licenze';
     public string $siteTheme = 'metelicenze'; // Default theme
+    public string $adminEmail = 'nhildra.morwen@gmail.com';
+    public string $siteURL    = 'https://metelicenze.unresolved.it/'; 
 }
