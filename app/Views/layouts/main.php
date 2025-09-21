@@ -25,6 +25,9 @@
 <body>
     <!-- Navbar -->
     <?= $this->include('partials/navbar') ?>
+    
+    <!-- Toast messages -->
+    <?= $this->include('partials/toasts') ?>
 
     <!-- Contenuto principale -->
     <main class="container my-4">

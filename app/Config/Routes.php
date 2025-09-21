@@ -19,10 +19,7 @@ $routes->group('database', ['filter' => 'group:superadmin,admin'], function($rou
      * Esempio: /database/fields/nome_database/nome_tabella
      */
     $routes->get('showlog', 'DatabaseInfoController::showLog');
-    $routes->get('utenti', 'UsersController::index');
-        $routes->get('utenti/(:num)/edit', 'UsersController::edit/$1');// modifica
-    $routes->post('utenti/(:num)/update', 'UsersController::update/$1');
-    $routes->get('utenti/(:num)/delete', 'UsersController::delete/$1');
+
 });
 
 $routes->group('filters', ['filter' => 'notpending'], function($routes) {
@@ -78,3 +75,13 @@ $routes->group('test', function($routes) {
 
 
 $routes->get('account-pending', 'AccountController::pending');
+
+$routes->group('utenti', ['filter' => 'group:superadmin,admin'], function($routes) {
+    $routes->get('/', 'UsersController::index');
+    $routes->get('crea', 'UsersController::crea');
+    $routes->get('modifica/(:num)', 'UsersController::modifica/$1');
+    $routes->get('elimina/(:num)', 'UsersController::elimina/$1');
+    $routes->get('visualizza/(:num)', 'UsersController::visualizza/$1');
+    $routes->post('salva/(:num)', 'UsersController::salva/$1');
+    $routes->get('approva/(:num)', 'UsersController::approva/$1');
+});

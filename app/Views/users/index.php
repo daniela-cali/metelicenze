@@ -15,7 +15,7 @@
         <!-- Barra azioni -->
         <div class="d-flex justify-content-between mb-3">
             <div>
-                <a href="<?= base_url('utenti/nuovo') ?>" class="btn btn-primary">
+                <a href="<?= base_url('utenti/crea') ?>" class="btn btn-primary">
                     <i class="bi bi-person-plus"></i> Nuovo Utente
                 </a>
             </div>
@@ -43,6 +43,7 @@
                                 <td><?= esc($utente->email) ?></td>
                                 <td>
                                     <?php foreach ($utente->getGroups() as $group): ?>
+                                        <?php if ($group === 'pending') $person_check = true; ?>
                                         <span class="badge bg-secondary"><?= esc($group) ?></span>
                                     <?php endforeach; ?>
                                 </td>
@@ -50,19 +51,28 @@
                                     <?= $utente->created_at ? $utente->created_at->format('d/m/Y H:i') : '-' ?>
                                 </td>
                                 <td class="text-end">
-                                    <a href="<?= base_url('utenti/dettaglio/' . $utente->id) ?>"
-                                       class="btn btn-sm btn-outline-info" title="Dettaglio">
+                                    <?php if (isset($person_check)) : ?>
+                                        <a href="<?= base_url('utenti/approva/' . $utente->id) ?>"
+                                            class="btn btn-sm btn-outline-success"
+                                            title="Approva"
+                                            onclick="return confirm('Approvare questo utente?')">
+                                            <i class="bi bi-person-check"></i>
+                                        </a>
+                                    <?php unset($person_check);
+                                    endif; ?>
+                                    <a href="<?= base_url('utenti/visualizza/' . $utente->id) ?>"
+                                        class="btn btn-sm btn-outline-info" title="Dettaglio">
                                         <i class="bi bi-eye"></i>
                                     </a>
                                     <a href="<?= base_url('utenti/modifica/' . $utente->id) ?>"
-                                       class="btn btn-sm btn-outline-secondary" title="Modifica">
+                                        class="btn btn-sm btn-outline-secondary" title="Modifica">
                                         <i class="bi bi-pencil"></i>
                                     </a>
-                                    <!-- eliminazione come GET (da rendere POST/DELETE con csrf se vuoi più sicurezza) -->
+
                                     <a href="<?= base_url('utenti/elimina/' . $utente->id) ?>"
-                                       class="btn btn-sm btn-outline-danger"
-                                       title="Elimina"
-                                       onclick="return confirm('Eliminare questo utente?')">
+                                        class="btn btn-sm btn-outline-danger"
+                                        title="Elimina"
+                                        onclick="return confirm('Eliminare questo utente?')">
                                         <i class="bi bi-trash"></i>
                                     </a>
                                 </td>

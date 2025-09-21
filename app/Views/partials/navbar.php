@@ -28,7 +28,7 @@ $siteName = $config->siteName ?? 'MeTe Licenze';
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="databaseDropdown">
                         <li><a class="dropdown-item" href="<?= base_url('database/') ?>">Test Connessioni</a></li>
-                        <li><a class="dropdown-item" href="<?= base_url('database/utenti') ?>">Utenti</a></li>
+                        <li><a class="dropdown-item" href="<?= base_url('utenti/') ?>">Utenti</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="<?= base_url('database/log') ?>">Log Database</a></li>
                     </ul>
@@ -37,6 +37,10 @@ $siteName = $config->siteName ?? 'MeTe Licenze';
 
             <ul class="navbar-nav">
                 <?php if (function_exists('auth') && auth()->loggedIn()): ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= base_url('utenti/visualizza/' . auth()->user()->id) ?>">
+                            <i class="bi bi-person-circle"></i> <?= esc(auth()->user()->username) ?>
+                        </a>
                     <li class="nav-item">
                         <a class="nav-link" href="<?= base_url('logout') ?>">
                             <i class="bi bi-box-arrow-right"></i> Logout
