@@ -84,4 +84,6 @@ $routes->group('utenti', ['filter' => 'group:superadmin,admin'], function($route
     $routes->get('visualizza/(:num)', 'UsersController::visualizza/$1');
     $routes->post('salva/(:num)', 'UsersController::salva/$1');
     $routes->get('approva/(:num)', 'UsersController::approva/$1');
+    $routes->get('changePassword', 'UsersController::changePassword');
+    $routes->post('changePassword', 'UsersController::changePassword');
 });

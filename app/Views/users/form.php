@@ -33,8 +33,13 @@
               required>
           </div>
 
+          <div class="d-flex justify-content-between">
+              <a href="<?= site_url('utenti/changePassword') ?>" class="btn btn-outline-secondary">Cambia Password</a>
+          </div>
 
         </fieldset>
+               
+
 
         <!-- Gruppi -->
         <fieldset class="border p-3 mb-4">
@@ -66,7 +71,7 @@
         <!-- Pulsanti -->
         <?php if ($mode !== 'view'): ?>
           <div class="d-flex justify-content-between">
-            <a href="<?= site_url('utenti') ?>" class="btn btn-outline-secondary">Annulla</a>
+            <a href="<?= site_url('utenti') ?>" class="btn btn-outline-secondary">Modifica Password</a>
             <button type="submit" class="btn btn-primary">Salva</button>
           </div>
         <?php else: ?>

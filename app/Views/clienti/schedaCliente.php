@@ -65,7 +65,6 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Codice</th>
-                                    <th>Descrizione</th>
                                     <th>Tipo</th>
                                     <th>Modello</th>
                                     <th>Stato</th>
@@ -77,7 +76,6 @@
                                     <tr class="licenza-row" data-id="<?= esc($licenza->id) ?>" style="cursor:pointer;">
                                         <td><?= esc($licenza->id) ?></td>
                                         <td><?= esc($licenza->codice) ?></td>
-                                        <td><?= esc($licenza->descrizione) ?></td>
                                         <td><?= esc($licenza->tipo) ?></td>
                                         <td><?= esc($licenza->modello) ?></td>
                                         <td>

@@ -34,7 +34,6 @@ class LicenzeController extends BaseController
             $licenza->versioneUltimoAggiornamento = $ultimo_agg ? array_values($ultimo_agg)[0]->versione_codice : 'N/A';
             $licenza->tipo = decodingTipo($licenza->tipo);
             $licenza->modello = decodingModello($licenza->modello);
-
         }
         $data['licenze'] = $licenze;
         $data['title'] = 'Elenco Licenze';
@@ -104,6 +103,7 @@ class LicenzeController extends BaseController
     {
         // Se non è fornito un ID cliente, non posso salvare la licenza
         $data = $this->request->getPost(); // Prende tutti i campi del form
+        log_message('info', 'Ricevo questi dati nel CONTROLLER: ' . print_r($data, true));
         $stato = $this->request->getPost('stato') ? 1 : 0; // Converte lo stato in booleano
         $data['stato'] = $stato; // Aggiungo lo stato al
         if ($idCliente === null) {

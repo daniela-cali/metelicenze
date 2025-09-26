@@ -21,30 +21,24 @@
                         value="<?= isset($licenza) ? esc($licenza->codice) : '' ?>">
                 </div>
 
-                <div class="mb-3">
-                    <label for="descrizione" class="form-label">Descrizione</label>
-                    <input type="text" name="descrizione" id="descrizione" class="form-control" rows="3" placeholder="Descrizione della licenza" required
-                        value="<?= isset($licenza) ? esc($licenza->descrizione) : '' ?>">
-
-                </div>
 
                 <div class="mb-3">
                     <label for="natura" class="form-label">Tipo</label>
                     <select name="tipo" id="tipo" class="form-select" required>
                         <option value="">-- Seleziona --</option>
-                        <option value="SI" <?= (isset($licenza) && $licenza->tipo === 'SI') ? 'selected' : '' ?>>Sigla</option>
-                        <option value="VA" <?= (isset($licenza) && $licenza->tipo === 'VA') ? 'selected' : '' ?>>VarHub</option>
-                        <option value="SK" <?= (isset($licenza) && $licenza->tipo === 'SK') ? 'selected' : '' ?>>SKTN</option>
+                        <option value="Sigla" <?= (isset($licenza) && $licenza->tipo === 'Sigla') ? 'selected' : '' ?>>Sigla</option>
+                        <option value="VarHub" <?= (isset($licenza) && $licenza->tipo === 'VarHub') ? 'selected' : '' ?>>VarHub</option>
+                        <option value="SKNT" <?= (isset($licenza) && $licenza->tipo === 'SKNT') ? 'selected' : '' ?>>SKTN</option>
                     </select>
                 </div>
                 <div class="mb-3">
                     <label for="modello" class="form-label">Modello</label>
                     <select name="modello" id="modello" class="form-select" required>
                         <option value="">-- Seleziona --</option>
-                        <option value="S" <?= (isset($licenza) && $licenza->modello === 'S') ? 'selected' : '' ?>>Start</option>
-                        <option value="U" <?= (isset($licenza) && $licenza->modello === 'U') ? 'selected' : '' ?>>Ultimate</option>
-                        <option value="C" <?= (isset($licenza) && $licenza->modello === 'C') ? 'selected' : '' ?>>Cloud</option>
-                        <option value="" <?= (isset($licenza) && empty($licenza->modello)) ? 'selected' : '' ?>>Nessun tipo di modello</option>
+                        <option value="Start" <?= (isset($licenza) && $licenza->modello === 'Start') ? 'selected' : '' ?>>Start</option>
+                        <option value="Ultimate" <?= (isset($licenza) && $licenza->modello === 'Ultimate') ? 'selected' : '' ?>>Ultimate</option>
+                        <option value="Cloud" <?= (isset($licenza) && $licenza->modello === 'Cloud') ? 'selected' : '' ?>>Cloud</option>
+                        <option value="N/A" <?= (isset($licenza) && empty($licenza->modello)) ? 'selected' : '' ?>>Nessun tipo di modello</option>
                     </select>
                 </div>
 

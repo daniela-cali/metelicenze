@@ -40,7 +40,7 @@
 
                 <div class="mt-4">
                     <button type="submit" class="btn btn-success">
-                        <i class="bi bi-check-circle"></i> Salva Licenza
+                        <i class="bi bi-check-circle"></i> Salva Versione
                     </button>
                     <a href="<?= previous_url() ?>" class="btn btn-secondary">Annulla</a>
                 </div>

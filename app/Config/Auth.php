@@ -273,7 +273,7 @@ class Auth extends ShieldAuth
      */
     public array $passwordValidators = [
         CompositionValidator::class,
-        NothingPersonalValidator::class,
+        //NothingPersonalValidator::class,
         DictionaryValidator::class,
         // PwnedValidator::class,
     ];

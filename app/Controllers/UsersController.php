@@ -6,6 +6,8 @@ use App\Controllers\BaseController;
 use CodeIgniter\Shield\Models\UserModel;
 use CodeIgniter\Shield\Entities\User;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Shield\Authentication\Passwords;
+use CodeIgniter\Shield\Validation\ValidationRules;
 
 class UsersController extends BaseController
 {
@@ -147,6 +149,42 @@ class UsersController extends BaseController
             'type'    => 'success',
             'message' => 'Utente aggiornato con successo.',
         ]);
+    }
+
+     public function changePassword()
+    {
+        $user = auth()->user();
+        log_message('info', 'Request method: ' . $this->request->getMethod());
+        if ($this->request->getMethod() === 'POST') {
+            $rules = [
+                'current_password' => [
+                    'label'  => 'Password attuale',
+                    'rules'  => 'required|checkCurrentPassword',
+                ],
+                'new_password'     => [
+                    'label' => 'Nuova password',
+                    'rules' => 'required|min_length[8]|strong_password',
+                ],
+                'new_password_confirm' => [
+                    'label' => 'Conferma nuova password',
+                    'rules' => 'required|matches[new_password]',
+                ],
+            ];
+            log_message('info', 'Validazione con regole: ' . print_r($rules, true));
+            if (! $this->validate($rules)) {
+                return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+            }
+
+            // Aggiornamento password
+            $user->password = $this->request->getPost('new_password');
+            log_message('info', 'Nuovo oggetto user: ' . print_r($user, true));
+            $userModel = auth()->getProvider();
+            $userModel->save($user);
+
+            return redirect()->back()->with('success', 'Password aggiornata con successo.');
+        }
+
+        return view('users/changePassword');
     }
 
     public function approva($id)
