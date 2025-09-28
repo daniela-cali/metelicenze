@@ -32,8 +32,12 @@ class LicenzeController extends BaseController
             $licenza->clienteId = $cliente ? array_values($cliente)[0]->id : null;           
             $licenza->ultimoAggiornamento = $ultimo_agg ? array_values($ultimo_agg)[0]->ultimo_aggiornamento : 'N/A';
             $licenza->versioneUltimoAggiornamento = $ultimo_agg ? array_values($ultimo_agg)[0]->versione_codice : 'N/A';
-            $licenza->tipo = decodingTipo($licenza->tipo);
-            $licenza->modello = decodingModello($licenza->modello);
+            
+            /**
+             * Commento in quanto ho cambiato il tipo in enum nel database
+             */
+            //$licenza->tipo = decodingTipo($licenza->tipo);
+            //$licenza->modello = decodingModello($licenza->modello);
         }
         $data['licenze'] = $licenze;
         $data['title'] = 'Elenco Licenze';
@@ -58,7 +62,11 @@ class LicenzeController extends BaseController
     public function crea($idCliente = null)
     {
 
-        // Se non è fornito un ID cliente, non posso salvare la licenza
+        /** 
+         * Se non è fornito un ID cliente, non posso salvare la licenza
+         * Pertanto si può creare una licenza solo dalla scheda cliente
+         * */
+
         if ($idCliente === null) {
             return redirect()->back()->with('error', 'Selezionare un cliente!.');
         }
@@ -82,6 +90,14 @@ class LicenzeController extends BaseController
         $licenza = $this->LicenzeModel->getLicenzeById($idLicenza);
         $idCliente = $licenza->id_cli_ext; // Ottengo l'ID del cliente associato alla licenza
         $codice =  $licenza->codice;
+        //$backTo = 
+        $data = [
+            'licenza' => $licenza,
+            'id_cliente' => $idCliente,
+            'mode' => 'edit',
+            'title' => 'Modifica Licenza ' . esc($codice) . ' (ID: ' . esc($idLicenza) . ')',
+            'action' => base_url('/licenze/salva/' . $idCliente . '/' . $idLicenza),
+        ];
 
         return view('licenze/form', [
             'mode' => 'edit',

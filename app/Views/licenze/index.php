@@ -1,24 +1,23 @@
-
 <?php $this->extend('layouts/main') ?>
 <?php $this->section('content') ?>
 <div class="container my-5">
     <div class="card shadow-sm">
-        <div class="card-header bg-primary  d-flex justify-content-between align-items-center">
+        <div class="card-header bg-primary d-flex justify-content-between align-items-center">
             <h5 class="mb-0"><i class="bi bi-key"></i> Elenco Licenze</h5>
-            <a href="/licenze/crea" class="btn btn-light btn-sm">
-                <i class="bi bi-plus-circle"></i> Aggiungi Licenza
+            
             </a>
         </div>
         <div class="card-body">
-
-            <?php if (!empty($licenze)): ?>
+            
+            <?php 
+            log_message('info', 'View licenze index variabile licenze' . print_r($licenze, true));
+            if (!empty($licenze)): ?>
                 <div class="table-responsive">
-                    <table class="table table-striped table-hover align-middle">
+                    <table class="table table-striped table-hover align-middle datatable">
                         <thead class="table-light">
                             <tr>
                                 <th>ID Licenza</th>
                                 <th>Codice</th>
-                                <th>Descrizione</th>                               
                                 <th>Tipo</th>
                                 <th>Cliente</th>
                                 <th>Data Ult. Agg.</th>
@@ -32,28 +31,51 @@
                                 <tr>
                                     <td><?= esc($licenza->id) ?></td>
                                     <td><?= esc($licenza->codice) ?></td>
-                                    <td><?= esc($licenza->descrizione) ?></td>
                                     <td><?= esc($licenza->tipo) ?></td>
                                     <td><?= esc($licenza->clienteNome) ?></td>
                                     <td><?= date('d/m/Y', strtotime($licenza->ultimoAggiornamento)) ?></td>
                                     <td><?= esc($licenza->versioneUltimoAggiornamento) ?></td>
                                     <td>
                                         <?php if ($licenza->stato): ?>
-                                            <span class="badge bg-success">Attiva</span>
+                                            <span class="badge bg-success">
+                                                <i class="bi bi-check"></i>
+
+                                            </span>
                                         <?php else: ?>
                                             <span class="badge bg-secondary"><?= esc(ucfirst($licenza->stato)) ?></span>
                                         <?php endif; ?>
                                     </td>
                                     <td>
-                                        <a href="/licenze/visualizza/<?= $licenza->id ?>" class="btn btn-sm btn-outline-primary" title="Visualizza">
-                                            <i class="bi bi-eye"></i>
-                                        </a>
-                                        <a href="/licenze/modifica/<?= $licenza->id ?>" class="btn btn-sm btn-outline-secondary" title="Modifica">
-                                            <i class="bi bi-pencil"></i>
-                                        </a>
-                                        <a href="/licenze/elimina/<?= $licenza->id ?>" class="btn btn-sm btn-outline-danger" title="Elimina" onclick="return confirm('Eliminare la licenza?')">
-                                            <i class="bi bi-trash"></i>
-                                        </a>
+                                        <div class="dropdown">
+                                            <button class="btn dropdown-toggle" type="button" id="azione" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="bi bi-list"></i>
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                <li>
+                                                    
+                                                    <a class="dropdown-item" href="<?= site_url('licenze/visualizza/' . $licenza->id) ?>">
+                                                        <i class="bi bi-eye"></i>
+                                                        Visualizza
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="<?= site_url('licenze/modifica/' . $licenza->id) ?>">
+                                                        <i class="bi bi-pencil"></i>
+                                                        Modifica
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <hr class="dropdown-divider">
+                                                </li>
+
+                                                <li class="">
+                                                    <a class="dropdown-item text-danger" href="<?= site_url('licenze/elimina/' . $licenza->id) ?>">
+                                                        <i class="bi bi-trash"></i>
+                                                        Elimina
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -70,5 +92,3 @@
     </div>
 </div>
 <?= $this->endSection() ?>
-
-

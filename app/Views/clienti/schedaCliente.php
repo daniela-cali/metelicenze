@@ -60,7 +60,7 @@
                 <!-- LICENZE -->
                 <div class="tab-pane fade" id="licenze" role="tabpanel" aria-labelledby="licenze-tab">
                     <?php if (!empty($licenze)): ?>
-                        <table class="table table-bordered table-hover align-middle">
+                        <table class="table table-bordered table-hover align-middle datatable" id="tabella-licenze">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -106,16 +106,13 @@
 
                 <!-- AGGIORNAMENTI -->
                 <div class="tab-pane fade" id="aggiornamenti" role="tabpanel" aria-labelledby="aggiornamenti-tab">
-                    <table class="table table-striped" id="tabella-aggiornamenti">
-                        <thead>
-                            <tr>
-                                <th>Data</th>
-                                <th>Descrizione</th>
-                            </tr>
-                        </thead>
+                    <table class="table" id="tabella-aggiornamenti">
+                        <!-- PHP per caricare gli aggiornamenti tramite fetch -->
+
+
                         <tbody>
                             <tr>
-                                <td colspan="2" class="text-center">HTML Seleziona una licenza per vedere gli aggiornamenti</td>
+                                <td colspan="2" class="text-center class="table-warning"">HTML Seleziona una licenza per vedere gli aggiornamenti</td>
                             </tr>
                         </tbody>
                     </table>
@@ -175,7 +172,7 @@
                         let tabAggContentBody = document.querySelector('#tabella-aggiornamenti tbody');
                         tabAggContentBody.innerHTML = ''; // Pulisce il contenuto della tabella
                         if (!selectedLicenzaId) {
-                            document.querySelector('#tabella-aggiornamenti tbody').innerHTML = '<tr><td colspan="2" class="text-center bg-warning bg-gradient"> Seleziona una licenza per vederne gli aggiornamenti.</td></tr>';
+                            document.querySelector('#tabella-aggiornamenti tbody').innerHTML = '<tr><td colspan="2" class="text-center bg-alert bg-gradient table-warning"> Seleziona una licenza per vederne gli aggiornamenti.</td></tr>';
                             return;
                         } else {
                             fetch(`/aggiornamenti/index/${selectedLicenzaId}`)
