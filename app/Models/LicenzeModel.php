@@ -19,9 +19,16 @@ class LicenzeModel extends Model
         'stato',
         'esistenza_cliente',
         'natura',
-        'descrizione',
         'tipo',
         'modello',
+        'created_at',
+        'updated_at',
+        'server',
+        'conn',
+        'ambiente',
+        'nodo',
+        'invii',
+        'giga',
     ];
     protected $useTimestamps    = true;
     protected $returnType       = 'object';
@@ -37,7 +44,7 @@ class LicenzeModel extends Model
     }
     public function getLicenze()
     {
-        
+
         return $this->select('*')
             ->orderBy('codice', 'ASC')
             ->findAll();
@@ -45,6 +52,7 @@ class LicenzeModel extends Model
 
     public function getLicenzeByCliente($idCliente)
     {
+        log_message('info', 'Recupero le licenze per il cliente con ID: ' . $idCliente . 'e ottengo: ' . print_r($this->where('id_cli_ext', $idCliente)->findAll(), true));
         return $this->where('id_cli_ext', $idCliente)->findAll();
     }
 
@@ -62,7 +70,15 @@ class LicenzeModel extends Model
             ->findAll();
         log_message('info', 'Clienti con licenza di tipo ' . $tipoLicenza . ': ' . print_r($idClientiPerLicenza, true));
         return $idClientiPerLicenza;
-            
+    }
+
+    public function geTipoLicenzeByCliente()
+    {
+        $tipoLicenzaPerCliente = $this->select('id_cli_ext, tipo')
+            ->distinct()
+            ->findAll();
+        log_message('info', 'tipoLicenzaPerCliente: ' . print_r($tipoLicenzaPerCliente, true));
+        return $tipoLicenzaPerCliente;
     }
     public function salva($data)
     {
@@ -73,5 +89,4 @@ class LicenzeModel extends Model
 
 
     }
-    
 }

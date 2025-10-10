@@ -1,11 +1,12 @@
-$(document).ready(function () {
-    $('.datatable').each(function () {
-        $(this).DataTable({
+datatableDefaults = $.extend(true, $.fn.dataTable.defaults, {
+            dom: 'Bfrtip',
             responsive: true,
             paging: true,
+
             language: {
-                url: baseUrl + 'assets/datatables/i18n/it-IT.json'
-            },            
+                url: '/assets/datatables/i18n/it-IT.json'
+            },
+
             buttons: [
                 {
                     extend: 'copy',
@@ -38,12 +39,7 @@ $(document).ready(function () {
                     exportOptions: { columns: ':not(.notexport)' }
                 }
 
-            ],
-            layout: {
-                topStart: 'buttons',
-                //topEnd: 'filter',
-                //bottomStart: 'info',
-            }
+            ]
+
         });
-    });
-});
+

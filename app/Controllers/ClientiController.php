@@ -18,7 +18,7 @@ class ClientiController extends BaseController
         $this->LicenzeModel = new LicenzeModel();
     }
 
-    public function index()
+    public function __index()
     {
         $tipoLicenza = $this->request->getGet('tipoLicenza');
         if ($tipoLicenza) {
@@ -30,7 +30,7 @@ class ClientiController extends BaseController
                 $ids[] = $licenza->id_cli_ext;
             }*/
             //$results = array_keys(array_column($idClientiPerLicenza, null, 'id_cli_ext'));
-            if (count($idClientiPerLicenza) >0) $data['clienti'] = $this->ClientiModel->getClientiByIds($ids);
+            if (count($idClientiPerLicenza) > 0) $data['clienti'] = $this->ClientiModel->getClientiByIds($ids);
             else $data['clienti'] = [];
             log_message('info', 'Clienti filtrati: ' . print_r($data['clienti'], true));
         } else {
@@ -40,6 +40,25 @@ class ClientiController extends BaseController
 
         foreach ($data['clienti'] as $cliente) {
             $cliente->numLicenze = $licenzeCount[$cliente->id] ?? 0;
+        }
+        $data['title'] = 'Elenco Clienti';
+
+        return view('clienti/index', $data);
+    }
+    public function index()
+    {
+
+        $data['clienti'] = $this->ClientiModel->getClienti();
+        $licenzeCount = $this->countLicenzeByCliente();
+        $licenzeTipo = $this->getTipoLicenzeByCliente();
+        log_message('info', 'Clienti: ' . print_r($data['clienti'], true));
+        log_message('info', 'Licenze per tipo: ' . print_r($licenzeTipo, true));
+        log_message('info', 'Conteggio licenze per cliente: ' . print_r($licenzeCount, true));
+
+
+        foreach ($data['clienti'] as $cliente) {
+            $cliente->numLicenze = $licenzeCount[$cliente->id] ?? 0;
+            $cliente->tipiLicenze = isset($licenzeTipo[$cliente->id]) ? $licenzeTipo[$cliente->id] : [];
         }
         $data['title'] = 'Elenco Clienti';
 
@@ -80,6 +99,20 @@ class ClientiController extends BaseController
             ->groupBy('id_cli_ext')
             ->findAll();
         $result = array_column($rows, 'numLicenze', 'id_cli_ext');
+        return $result;
+    }
+    public function getTipoLicenzeByCliente()
+    {
+        $rows = $this->LicenzeModel->select('id_cli_ext, tipo')
+            ->groupBy('id_cli_ext, tipo')
+            ->get()
+            ->getResultArray(); // array normale, nessuna indicizzazione su PK come in findAll()
+        // Estraggo un array associativo con id_cli_ext come chiave e tipo come valore 
+        $result = [];
+        foreach ($rows as $row) {
+            $result[$row['id_cli_ext']][] = $row['tipo'];
+        }
+        log_message('info', 'tipoLicenzaPerCliente: ' . print_r($result, true));
         return $result;
     }
 }

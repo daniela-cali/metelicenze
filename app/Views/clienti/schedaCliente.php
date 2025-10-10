@@ -68,7 +68,7 @@
                                     <th>Tipo</th>
                                     <th>Modello</th>
                                     <th>Stato</th>
-                                    <th>Azioni</th>
+                                    <th class= "notexport" >Azioni</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -155,7 +155,7 @@
                 let tabActive = this.id;
                 //console.log('Tab attivo:', tabActive);
                 switch (tabActive) {
-                    case 'anagrafica-tab':
+                    /*case 'anagrafica-tab':
                         //console.log('Tab Anagrafica selezionato');
                         document.getElementById('navigation').setAttribute('href', '/clienti');
                         document.getElementById('navigation').innerHTML = '<i class="bi bi-arrow-left-circle"></i> Torna all’elenco clienti';
@@ -164,11 +164,11 @@
                         console.log('Tab Licenze selezionato');
                         document.getElementById('navigation').setAttribute('href', '/licenze/crea/<?= esc($cliente->id) ?>');
                         document.getElementById('navigation').innerHTML = '<i class="bi bi-key-fill"></i> Crea Licenza per il cliente';
-                        break;
+                        break;*/
                     case 'aggiornamenti-tab':
-                        console.log('Tab Aggiornamenti selezionato');
+                        /*console.log('Tab Aggiornamenti selezionato');
                         document.getElementById('navigation').setAttribute('href', '/aggiornamenti/crea/' + selectedLicenzaId);
-                        document.getElementById('navigation').innerHTML = '<i class="bi bi-clock-history"></i> Aggiungi Aggiornamento per la licenza';
+                        document.getElementById('navigation').innerHTML = '<i class="bi bi-clock-history"></i> Aggiungi Aggiornamento per la licenza';*/
                         let tabAggContentBody = document.querySelector('#tabella-aggiornamenti tbody');
                         tabAggContentBody.innerHTML = ''; // Pulisce il contenuto della tabella
                         if (!selectedLicenzaId) {

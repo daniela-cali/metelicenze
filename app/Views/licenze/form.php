@@ -81,16 +81,16 @@
                     </input>
                 </div>
                 <div class=" mb-3 form-group d-none" data-licenza="Sigla">
-                    <label for="server">Connessioni</label>
-                    <textarea class="form-control" id="server" name="server" rows="3"><?= 
-                         isset($licenza) ? esc($licenza->server) : '' 
+                    <label for="conn">Connessioni</label>
+                    <textarea class="form-control" id="conn" name="conn" rows="3"><?=
+                        isset($licenza) ? esc($licenza->conn) : ''
                     ?></textarea>
                 </div>
-                                    
+
                 <div class=" mb-3 form-group" data-licenza="Common">
                     <label for="note">Note Licenza</label>
-                    <textarea class="form-control" id="note" name="note" rows="3"><?= 
-                        isset($licenza) ? esc($licenza->note) : '' 
+                    <textarea class="form-control" id="note" name="note" rows="3"><?=
+                        isset($licenza) ? esc($licenza->note) : ''
                     ?></textarea>
                 </div>
                 <div class="mb-3 form-check" data-licenza="Common">
@@ -116,45 +116,61 @@
 <?= $this->endSection() ?>
 <?= $this->section('scripts') ?>
 <script>
-    $(document).ready(function() {
+    document.addEventListener("DOMContentLoaded", function() {
         // Inizializza il form con i dati della licenza se esistono
-        const mode = $('form').data('mode');
-        console.log('Modalità: ' + mode);
-        if (mode === 'view') {
-            // Se la modalità è "view", rendo tutti i campi readonly
-            $('input, select, textarea').prop('readonly', true).prop('disabled', true);
+        const form = document.querySelector("form");
+        const mode = form.dataset.mode || "edit"; // default "edit" se non esiste
+        console.log("Modalità:", mode);
+
+        if (mode === "view") {
+            // Se la modalità è "view", rendo tutti i campi readonly/disabled
+            form.querySelectorAll("input, select, textarea").forEach(el => {
+                el.readOnly = true;
+                el.disabled = true;
+            });
             // Disabilito anche il bottone del form
-            $('button[type="submit"]').prop('disabled', true);
+            form.querySelectorAll('button[type="submit"]').forEach(btn => {
+                btn.disabled = true;
+            });
         }
 
-        document.getElementById("tipo").addEventListener("change", function() {
-            const tipoSelezionato = this.value;
-            console.log("Tipo selezionato: " + tipoSelezionato);
+        // Funzione per aggiornare la visibilità in base al tipo selezionato
+        function aggiornaCampi() {
+            const tipoSelezionato = selectTipo.value;
+            console.log("Tipo selezionato:", tipoSelezionato);
 
-            document.querySelectorAll('[data-licenza]').forEach(wrapper => {
-                console.log("Wrapper con data-licenza: " + wrapper.getAttribute('data-licenza'));
-                if (wrapper.getAttribute('data-licenza').includes(tipoSelezionato) || wrapper.getAttribute('data-licenza') === 'Common') {
-                    wrapper.classList.remove('d-none');
-                    // Rendo i campi all'interno del wrapper obbligatori se non sono in modalità view
-                    if (mode !== 'view') {
-                        wrapper.querySelectorAll('input, select, textarea').forEach(campo => {
-                            if (campo.name === 'note') return; // Escludo il campo note dall'essere obbligatorio
-                            campo.required = true;
-                        });
+            document.querySelectorAll("[data-licenza]").forEach(wrapper => {
+                const valoreWrapper = wrapper.getAttribute("data-licenza");
+                console.log("Wrapper con data-licenza:", valoreWrapper);
+
+                if (valoreWrapper.includes(tipoSelezionato) || valoreWrapper === "Common") {
+                    wrapper.classList.remove("d-none");
+
+                    // Rendo i campi all'interno del wrapper obbligatori (se non in view)
+                    if (mode !== "view") {
+                        wrapper.querySelectorAll("input, select, textarea").forEach(campo => {});
                     }
                 } else {
-                    wrapper.classList.add('d-none');
-                    // Rimuovo l'obbligatorietà dai campi all'interno del wrapper
-                    wrapper.querySelectorAll('input, select, textarea').forEach(campo => {
+                    wrapper.classList.add("d-none");
+                    // Rimuovo obbligatorietà e resetto i valori
+                    wrapper.querySelectorAll("input, select, textarea").forEach(campo => {
                         campo.required = false;
-                        campo.value = ''; // Pulisce il valore del campo quando viene nascosto
+                        campo.value = "";
                     });
                 }
-
             });
+        }
 
+        // Aggancio eventi al select
+        const selectTipo = document.getElementById("tipo");
+        ["change", "load"].forEach(event => {
+            console.log("Aggiungo event listener per:", event);
+            selectTipo.addEventListener(event, aggiornaCampi);
         });
 
+        // Eseguo subito una prima volta per lo stato iniziale
+        aggiornaCampi();
     });
 </script>
+
 <?= $this->endSection() ?>

@@ -55,27 +55,24 @@ class AggiornamentiModel extends Model
 
         return $aggiornamento;
     }
+
     function getLastAggiornamenti()
     {
-        log_message('info', 'AggiornamentiModel::getLastAggiornamenti - Recupero ultimi aggiornamenti per licenza');
-        $ultimiAggiornamenti = $this->select('MAX(dt_agg) as ultimo_aggiornamento, licenze_id as licenza_id, versioni_id as versione_id, versioni.codice AS versione_codice, licenze.codice AS licenza_codice')
-                ->join('versioni', 'versioni.id = aggiornamenti.versioni_id', 'left')
-                ->join('licenze', 'licenze.id = aggiornamenti.licenze_id', 'left')
-                ->groupBy('licenze_id')
-                ->findAll();
-        log_message('info', 'Ultimi aggiornamenti raw: ' . print_r($ultimiAggiornamenti, true));
-        //$ids = array_map(fn($a) => $a->dt_agg, $ultimiAggiornamenti);
-        //log_message('info', 'Ultimi aggiornamenti IDs: ' . print_r($ids, true));
-        /*$aggioJoin = $this->select('aggiornamenti.*, versioni.codice AS versione, licenze.id AS licenzaId, licenze.codice AS licenzaCodice')
-            ->join('versioni', 'versioni.id = aggiornamenti.versioni_id', 'left')
-            ->join('licenze', 'licenze.id = aggiornamenti.licenze_id', 'left')
-            ->orderBy('aggiornamenti.dt_agg', 'DESC')
-            ->findAll(); 
-        log_message('info', 'Ultimi aggiornamenti dettagliati: ' . print_r($aggioJoin, true));*/
+        $db = \Config\Database::connect();
+        $subquery = $db->table('aggiornamenti a2')
+            ->select('MAX(a2.dt_agg)')
+            ->where('a2.licenze_id = aggiornamenti.licenze_id')
+            ->getCompiledSelect();
 
+        $builder = $db->table('aggiornamenti')
+            ->select('aggiornamenti.id as aggiornamento_id, aggiornamenti.dt_agg as ultimo_aggiornamento, versioni.id AS versione_id, versioni.codice AS versione_codice, licenze.codice AS licenza_codice, licenze.id AS licenza_id, licenze.id_cli_ext AS cliente_id ')
+            ->join('versioni', 'aggiornamenti.versioni_id = versioni.id')
+            ->join('licenze', 'aggiornamenti.licenze_id = licenze.id')
+            ->where("aggiornamenti.dt_agg = ($subquery)", null, false);
 
+        $query = $builder->get();
+        $ultimiAggiornamenti = $query->getResult();
+        //log_message('info', 'AggiornamentiModel::getLastAggiornamenti - Risultati: ' . print_r($ultimiAggiornamenti, true));
         return $ultimiAggiornamenti;
     }
-
-
 }

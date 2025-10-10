@@ -32,9 +32,9 @@
                 </div>
                 <div class="mb-3">
                     <label for="note_versione" class="form-label">Note di versione</label>
-                    <textarea name="note_versione" id="note_versione" class="form-control" rows="10">
-                        <?= isset($versione) ? esc($versione->note_versione) : '' ?>
-                    </textarea>
+                    <textarea name="note_versione" id="note_versione" class="form-control" rows="10"><?= 
+                        isset($versione) ? esc($versione->note_versione) : '' 
+                    ?></textarea>
                 </div>
 
 

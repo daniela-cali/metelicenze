@@ -23,16 +23,21 @@ class LicenzeController extends BaseController
         $licenze = $this->LicenzeModel->getLicenze();
         $clienti = $this->ClientiModel->getInfoClienti();
         $aggiornamenti = $this->AggiornamentiModel->getLastAggiornamenti();
-        log_message('info', 'LicenzeController::Aggiornamenti recenti: ' . print_r($aggiornamenti, true));
         foreach ($licenze as $licenza) {
             // Trova il cliente corrispondente per ogni licenza
             $cliente = array_filter($clienti, fn($c) => $c->id === $licenza->id_cli_ext);
             $ultimo_agg = array_filter($aggiornamenti, fn($a) => $a->licenza_id === $licenza->id);
             $licenza->clienteNome = $cliente ? array_values($cliente)[0]->nome : 'Cliente non trovato';
             $licenza->clienteId = $cliente ? array_values($cliente)[0]->id : null;           
-            $licenza->ultimoAggiornamento = $ultimo_agg ? array_values($ultimo_agg)[0]->ultimo_aggiornamento : 'N/A';
-            $licenza->versioneUltimoAggiornamento = $ultimo_agg ? array_values($ultimo_agg)[0]->versione_codice : 'N/A';
-            
+            //$licenza->ultimoAggiornamento = $ultimo_agg ? array_values($ultimo_agg)[0]->ultimo_aggiornamento : 'N/A';
+            if ($ultimo_agg) {
+                $ultimo_agg_data = array_values($ultimo_agg)[0]->ultimo_aggiornamento;
+                //Formatto la data in d/m/Y e la tolgo dalla view per mostrare anche N/A altrimenti esce 01/01/1970
+                $licenza->ultimoAggiornamento = date('d/m/Y', strtotime($ultimo_agg_data));
+            } else {
+                $licenza->ultimoAggiornamento = 'N/A';
+            }
+            $licenza->versioneUltimoAggiornamento = $ultimo_agg ? array_values($ultimo_agg)[0]->versione_codice : 'N/A';          
             /**
              * Commento in quanto ho cambiato il tipo in enum nel database
              */

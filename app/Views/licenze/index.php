@@ -23,7 +23,7 @@
                                 <th>Data Ult. Agg.</th>
                                 <th>Versione attuale</th>
                                 <th>Stato</th>
-                                <th>Azioni</th>
+                                <th class="notexport">Azioni</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -33,13 +33,13 @@
                                     <td><?= esc($licenza->codice) ?></td>
                                     <td><?= esc($licenza->tipo) ?></td>
                                     <td><?= esc($licenza->clienteNome) ?></td>
-                                    <td><?= date('d/m/Y', strtotime($licenza->ultimoAggiornamento)) ?></td>
+                                    <td><?= esc($licenza->ultimoAggiornamento) ?></td>
                                     <td><?= esc($licenza->versioneUltimoAggiornamento) ?></td>
                                     <td>
                                         <?php if ($licenza->stato): ?>
                                             <span class="badge bg-success">
                                                 <i class="bi bi-check"></i>
-
+                                                Attiva
                                             </span>
                                         <?php else: ?>
                                             <span class="badge bg-secondary"><?= esc(ucfirst($licenza->stato)) ?></span>

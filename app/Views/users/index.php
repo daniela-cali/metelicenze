@@ -31,7 +31,7 @@
                         <th scope="col">Email</th>
                         <th scope="col">Ruoli</th>
                         <th scope="col">Creato il</th>
-                        <th scope="col" class="text-end">Azioni</th>
+                        <th scope="col" class="text-end notexport">Azioni</th>
                     </tr>
                 </thead>
                 <tbody>
