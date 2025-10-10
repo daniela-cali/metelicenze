@@ -7,7 +7,7 @@
         <div class="card-header bg-primary  d-flex justify-content-between align-items-center">
             <h5 class="mb-0"><i class="bi bi-person-badge"></i> Dettaglio Cliente</h5>
 
-            <a href="/clienti" id="navigation" class="btn btn-secondary btn-sm">
+            <a href="/clienti" id="navigation" class="btn btn-light btn-outline-secondary btn-sm">
                 <i class="bi bi-arrow-left-circle"></i> Torna all’elenco clienti
             </a>
         </div>
@@ -59,6 +59,11 @@
 
                 <!-- LICENZE -->
                 <div class="tab-pane fade" id="licenze" role="tabpanel" aria-labelledby="licenze-tab">
+                    <div class="mb-3">
+                        <a href="/licenze/crea/<?= esc($cliente->id) ?>" class="btn btn-light btn-outline-secondary btn-sm text-end mb-3" title="Nuova Licenza per il cliente">
+                            <i class="bi bi-key-fill"></i> Nuova Licenza
+                        </a>
+                    </div>
                     <?php if (!empty($licenze)): ?>
                         <table class="table table-bordered table-hover align-middle datatable" id="tabella-licenze">
                             <thead>
@@ -68,7 +73,7 @@
                                     <th>Tipo</th>
                                     <th>Modello</th>
                                     <th>Stato</th>
-                                    <th class= "notexport" >Azioni</th>
+                                    <th class="notexport">Azioni</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -112,7 +117,7 @@
 
                         <tbody>
                             <tr>
-                                <td colspan="2" class="text-center class="table-warning"">HTML Seleziona una licenza per vedere gli aggiornamenti</td>
+                                <td colspan="2" class="text-center class=" table-warning"">HTML Seleziona una licenza per vedere gli aggiornamenti</td>
                             </tr>
                         </tbody>
                     </table>
