@@ -22,7 +22,7 @@
                                 <th>Cliente</th>
                                 <th>Data Ult. Agg.</th>
                                 <th>Versione attuale</th>
-                                <th>Stato</th>
+                                <th>Aggiornato</th>
                                 <th class="notexport">Azioni</th>
                             </tr>
                         </thead>
@@ -36,13 +36,16 @@
                                     <td><?= esc($licenza->ultimoAggiornamento) ?></td>
                                     <td><?= esc($licenza->versioneUltimoAggiornamento) ?></td>
                                     <td>
-                                        <?php if ($licenza->stato): ?>
+                                        <?php if ($licenza->ultimaVersione): ?>
                                             <span class="badge bg-success">
-                                                <i class="bi bi-check"></i>
-                                                Attiva
+                                               <i class="bi bi-check"></i>
+                                                Aggiornato
                                             </span>
                                         <?php else: ?>
-                                            <span class="badge bg-secondary"><?= esc(ucfirst($licenza->stato)) ?></span>
+                                            <span class="badge bg-warning text-dark">
+                                                <i class="bi bi-exclamation-triangle"></i>
+                                                Da aggiornare
+                                            </span>
                                         <?php endif; ?>
                                     </td>
                                     <td>

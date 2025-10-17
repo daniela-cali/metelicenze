@@ -95,17 +95,20 @@
                 </div>
                 <div class="mb-3 form-check" data-licenza="Common">
                     <label class="form-check-label" class="form-label" for="stato">Licenza attiva</label>
+                    <!-- Per gestire il checkbox in modo che invii sempre un valore -->
+                    <input type="hidden" name="stato" value="0"/>
                     <input
                         type="checkbox"
                         class="form-check-input"
                         id="stato"
                         name="stato"
+                        value="1"
                         <?php if (!isset($licenza) || $licenza->stato) echo 'checked'; ?> />
                 </div>
 
                 <div class="mt-4 " data-licenza="Common">
                     <button type="submit" class="btn btn-success">
-                        <i class="bi bi-check-circle"></i> Salva Licenza
+                        <i class="bi bi-check-circle"></i> Salva 
                     </button>
                     <a href="<?= previous_url() ?>" class="btn btn-secondary">Annulla</a>
                 </div>

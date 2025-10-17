@@ -10,10 +10,21 @@
             </a>
         </div>
 
-        <div class="card-body">
-
-            <form action="<?= $action ?>" method="post" data-mode="<?= $mode ?>">
-                <input type="hidden" name="id" value="<?= isset($versione) ? esc($versione->id) : '' ?>">                
+        <form action="<?= $action ?>" method="post" data-mode="<?= $mode ?>">
+            <div class="card-body">
+                <div class="mb-3 form-check">
+                    <label class="form-check-label" class="form-label" for="stato">Ultima Versione</label>
+                    <!-- Per gestire il checkbox in modo che invii sempre un valore -->
+                    <input type="hidden" name="ultima" value="0"/>
+                    <input
+                        type="checkbox"
+                        class="form-check-input"
+                        id="ultima"
+                        name="ultima"
+                        value="1"
+                        <?php if (!isset($versione) || $versione->ultima) echo 'checked'; ?> />
+                </div>
+                <input type="hidden" name="id" value="<?= isset($versione) ? esc($versione->id) : '' ?>">
                 <div class="mb-3">
                     <label for="data_agg" class="form-label">Data Rilascio</label>
                     <input type="date" name="dt_rilascio" id="dt_rilascio" class="form-control" required
@@ -32,21 +43,19 @@
                 </div>
                 <div class="mb-3">
                     <label for="note_versione" class="form-label">Note di versione</label>
-                    <textarea name="note_versione" id="note_versione" class="form-control" rows="10"><?= 
-                        isset($versione) ? esc($versione->note_versione) : '' 
-                    ?></textarea>
+                    <textarea name="note_versione" id="note_versione" class="form-control" rows="10"><?=
+                                                                                                        isset($versione) ? esc($versione->note_versione) : ''
+                                                                                                        ?></textarea>
                 </div>
-
-
                 <div class="mt-4">
                     <button type="submit" class="btn btn-success">
-                        <i class="bi bi-check-circle"></i> Salva Versione
+                        <i class="bi bi-check-circle"></i> Salva
                     </button>
                     <a href="<?= previous_url() ?>" class="btn btn-secondary">Annulla</a>
                 </div>
-            </form>
-        </div>
+        </form>
     </div>
+</div>
 </div>
 <?= $this->endSection() ?>
 <?= $this->section('scripts') ?>

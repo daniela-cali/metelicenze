@@ -24,11 +24,14 @@ $siteName = $config->siteName ?? 'MeTe Licenze';
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="databaseDropdown" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        Database
+                        Admin
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="databaseDropdown">
                         <li><a class="dropdown-item" href="<?= base_url('database/') ?>">Test Connessioni</a></li>
                         <li><a class="dropdown-item" href="<?= base_url('utenti/') ?>">Utenti</a></li>
+                        <li><a class="dropdown-item" href="<?= base_url('admin/settings') ?>">Impostazioni App</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="<?= base_url('admin/import') ?>">Importa Dati</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="<?= base_url('database/log') ?>">Log Database</a></li>
                     </ul>

@@ -3,9 +3,11 @@ $(document).ready(function () {
         $(this).DataTable({
             responsive: true,
             paging: true,
+            lengthMenu: [25, 50, 100, { label: 'Tutti', value: -1 }],
             language: {
-                url: baseUrl + 'assets/datatables/i18n/it-IT.json'
-            },            
+                url: baseUrl + 'assets/datatables/i18n/it-IT.json',
+
+            },
             buttons: [
                 {
                     extend: 'copy',
@@ -41,9 +43,11 @@ $(document).ready(function () {
             ],
             layout: {
                 topStart: 'buttons',
-                //topEnd: 'filter',
-                //bottomStart: 'info',
+                topEnd: 'search',
+                bottomStart: ['info', 'pageLength'],
+                bottomEnd: 'paging'
             }
+
         });
     });
 });

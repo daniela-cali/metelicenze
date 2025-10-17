@@ -18,6 +18,7 @@ class VersioniModel extends Model
         'note_versione',
         'dt_rilascio',
         'stato',
+        'ultima',
 
     ];
 

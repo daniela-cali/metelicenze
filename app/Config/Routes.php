@@ -87,3 +87,11 @@ $routes->group('utenti', ['filter' => 'group:superadmin,admin'], function($route
     $routes->get('changePassword', 'UsersController::changePassword');
     $routes->post('changePassword', 'UsersController::changePassword');
 });
+
+$routes->group('admin', ['filter' => 'group:superadmin,admin'], function($routes) {
+    $routes->get('import', 'Admin\ImportController::index');  
+    $routes->post('import/process', 'Admin\ImportController::processImport');
+    $routes->get('settings', 'Admin\SettingsController::index');
+    $routes->post('settings/save', 'Admin\SettingsController::save'); 
+});
+$routes->get('admin/test-settings', 'Admin\TestSettings::index');

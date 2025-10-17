@@ -33,9 +33,9 @@
                 </div>
                 <div class="mb-3">
                     <label for="note" class="form-label">Note sull'aggiornamento</label>
-                    <textarea name="note" id="note" class="form-control" rows="10">
-                        <?= isset($aggiornamento) ? esc($aggiornamento->note) : '' ?>
-                    </textarea>
+                    <textarea name="note" id="note" class="form-control" rows="10"><?= 
+                        isset($aggiornamento) ? esc($aggiornamento->note) : '' 
+                    ?></textarea>
                 </div>
                 <div class="mt-4">
 

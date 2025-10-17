@@ -63,6 +63,12 @@ class VersioniController extends BaseController
         // Se $idVersione è null, stiamo creando una nuova versione
         // Altrimenti, stiamo modificando una versione esistente
         $data = $this->request->getPost();
+
+        $ultima_sn = $data['ultima'] ?? false;
+        if ($ultima_sn) {
+            // Se l'utente ha selezionato "Ultima", aggiorno tutte le altre versioni
+            $this->VersioniModel->set(['ultima' => 0])->where('ultima', 1)->update();
+        }
         log_message('info', 'Dati ricevuti per il salvataggio: ' . print_r($data, true));
         //echo "Dati ricevuti: ";
         //print_r($data); 

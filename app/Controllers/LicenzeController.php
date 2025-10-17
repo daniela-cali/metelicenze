@@ -34,7 +34,9 @@ class LicenzeController extends BaseController
                 $ultimo_agg_data = array_values($ultimo_agg)[0]->ultimo_aggiornamento;
                 //Formatto la data in d/m/Y e la tolgo dalla view per mostrare anche N/A altrimenti esce 01/01/1970
                 $licenza->ultimoAggiornamento = date('d/m/Y', strtotime($ultimo_agg_data));
+                $licenza->ultimaVersione = array_values($ultimo_agg)[0]->ultima ? true : false;
             } else {
+                $licenza->ultimaVersione = false;
                 $licenza->ultimoAggiornamento = 'N/A';
             }
             $licenza->versioneUltimoAggiornamento = $ultimo_agg ? array_values($ultimo_agg)[0]->versione_codice : 'N/A';          
@@ -125,8 +127,7 @@ class LicenzeController extends BaseController
         // Se non è fornito un ID cliente, non posso salvare la licenza
         $data = $this->request->getPost(); // Prende tutti i campi del form
         log_message('info', 'Ricevo questi dati nel CONTROLLER: ' . print_r($data, true));
-        $stato = $this->request->getPost('stato') ? 1 : 0; // Converte lo stato in booleano
-        $data['stato'] = $stato; // Aggiungo lo stato al
+
         if ($idCliente === null) {
             return redirect()->back()->with('error', 'Selezionare un cliente!.');
         } else {

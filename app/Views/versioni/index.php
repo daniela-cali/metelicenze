@@ -31,10 +31,10 @@
                                     <td><?= esc($versione->release) ?></td>
                                     <td><?= date('d/m/Y', strtotime($versione->dt_rilascio)) ?></td>
                                     <td>
-                                        <?php if ($versione->stato): ?>
-                                            <span class="badge bg-success">Attiva</span>
+                                        <?php if ($versione->ultima): ?>
+                                            <span class="badge bg-success">Ultima</span>
                                         <?php else: ?>
-                                            <span class="badge bg-secondary"><?= esc(ucfirst($versione->stato)) ?></span>
+                                            <span class="badge bg-secondary"><i>Superata</i></span>
                                         <?php endif; ?>
                                     </td>
                                     <td>
@@ -71,7 +71,7 @@
                 url: 'https://cdn.datatables.net/plug-ins/2.3.2/i18n/it-IT.json',
             },
             responsive: true,
-            order: [[0, 'asc']],
+            order: [],
             columnDefs: [
                 {
                     targets: 6,

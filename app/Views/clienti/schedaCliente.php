@@ -80,7 +80,7 @@
                                 <?php foreach ($licenze as $licenza): ?>
                                     <tr class="licenza-row" data-id="<?= esc($licenza->id) ?>" style="cursor:pointer;">
                                         <td><?= esc($licenza->id) ?></td>
-                                        <td><?= esc($licenza->codice) ?></td>
+                                        <td><?= $licenza->codice ? esc($licenza->codice) :esc($licenza->ambiente) ?></td>
                                         <td><?= esc($licenza->tipo) ?></td>
                                         <td><?= esc($licenza->modello) ?></td>
                                         <td>

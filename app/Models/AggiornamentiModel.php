@@ -65,7 +65,7 @@ class AggiornamentiModel extends Model
             ->getCompiledSelect();
 
         $builder = $db->table('aggiornamenti')
-            ->select('aggiornamenti.id as aggiornamento_id, aggiornamenti.dt_agg as ultimo_aggiornamento, versioni.id AS versione_id, versioni.codice AS versione_codice, licenze.codice AS licenza_codice, licenze.id AS licenza_id, licenze.id_cli_ext AS cliente_id ')
+            ->select('aggiornamenti.id as aggiornamento_id, aggiornamenti.dt_agg as ultimo_aggiornamento, versioni.id AS versione_id, versioni.codice AS versione_codice, versioni.ultima AS ultima, licenze.codice AS licenza_codice, licenze.id AS licenza_id, licenze.id_cli_ext AS cliente_id ')
             ->join('versioni', 'aggiornamenti.versioni_id = versioni.id')
             ->join('licenze', 'aggiornamenti.licenze_id = licenze.id')
             ->where("aggiornamenti.dt_agg = ($subquery)", null, false);

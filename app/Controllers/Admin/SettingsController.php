@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
@@ -6,25 +7,42 @@ use App\Settings\SiteSettings;
 
 class SettingsController extends BaseController
 {
+    protected $settingsService;
+
+    public function __construct()
+    {
+        $this->settingsService = service('settings');
+    }
+
     public function index()
     {
-        $settings = setting(SiteSettings::class);
+        // Legge l'intero oggetto SiteSettings dal DB
+        $siteSettings = $this->settingsService->get(SiteSettings::class);
 
-        return view('admin/settings', [
-            'settings' => $settings,
+        // Se non esiste ancora, crea un oggetto vuoto
+        if (!$siteSettings) {
+            $siteSettings = new SiteSettings();
+        }
+
+        return view('admin/settings_form', [
+            'settings' => $siteSettings,
         ]);
     }
 
     public function save()
     {
-        $data = $this->request->getPost();
+        $post = $this->request->getPost();
 
-        $settings = setting(SiteSettings::class);
-        $settings->siteName = $data['siteName'] ?? 'Default name';
-        $settings->maintenanceMode = isset($data['maintenanceMode']);
+        $siteSettings = new SiteSettings();
+        $siteSettings->siteName = $post['siteName'] ?? '';
+        $siteSettings->siteTheme = $post['siteTheme'] ?? '';
+        $siteSettings->adminEmail = $post['adminEmail'] ?? '';
+        $siteSettings->siteURL = $post['siteURL'] ?? '';
+        $siteSettings->maintenanceMode = !empty($post['maintenanceMode']);
 
-        setting()->save($settings);
+        // Salva nel DB
+        $this->settingsService->save($siteSettings);
 
-        return redirect()->back()->with('success', 'Impostazioni salvate correttamente.');
+        return redirect()->to('/admin/settings')->with('success', 'Impostazioni salvate correttamente!');
     }
 }

@@ -84,4 +84,9 @@ class ClientiModel extends Model
             ->where('tbana_id_pk', $id)
             ->first();
     }
+
+    public function getForImport()
+    {
+        return $this->where('tbcf_tp', 'C')->findAll();
+    }
 }
