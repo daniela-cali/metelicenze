@@ -72,10 +72,15 @@ class ClientiImportModel extends Model
 
         $clienti = $this->getRecordsetForImport();
         $countImported = 0;
+        $countUpdated = 0;
 
         foreach ($clienti as $cliente) {
             //Imposto i valori di default per i campi mancanti a db sono not null
-            $countImported++;
+            if (empty($cliente->id)) {
+                $countImported++; // Se ID è vuoto, è un nuovo cliente                
+            } else {
+                $countUpdated++; // Altrimenti è un aggiornamento
+            }
             $data = [
                 'id' => $cliente->id, // Se esiste già, mantiene lo stesso ID
                 'codice' => $cliente->codice?: 'Mancante',
@@ -94,10 +99,10 @@ class ClientiImportModel extends Model
                 'updated_at' => date('Y-m-d H:i:s'),
                 'utente_import' => auth()->id(),
             ];
-            log_message('info', 'ClientiImportModel::importClienti - Importazione cliente: ' . print_r($data, true));
+            
             $this->save($data);
 
         }
-        return "Importati/aggiornati $countImported clienti.";
+        return "Importati $countImported clienti e aggiornati $countUpdated clienti.";
     }
 }

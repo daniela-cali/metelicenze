@@ -38,7 +38,7 @@
                 <div class="tab-pane fade show active" id="anagrafica" role="tabpanel" aria-labelledby="anagrafica-tab">
                     <dl class="row">
                         <dt class="col-sm-3">Codice Cliente</dt>
-                        <dd class="col-sm-9"><?= esc($cliente->codice_cliente) ?></dd>
+                        <dd class="col-sm-9"><?= esc($cliente->codice) ?></dd>
 
                         <dt class="col-sm-3">Nome</dt>
                         <dd class="col-sm-9"><?= esc($cliente->nome) ?></dd>

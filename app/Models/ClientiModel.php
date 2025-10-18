@@ -6,39 +6,33 @@ use CodeIgniter\Model;
 
 class ClientiModel extends Model
 {
-    protected $DBGroup          = 'external';
-    protected $transcoding = true; // Abilita la transcodifica dei campi
-    protected $transcodingArray = [
-        'tbcf_cd' => 'codice_cliente',
-        'tbana_id_pk' => 'id',
-        'tbana_ragsoc1' => 'nome',
-        'tbana_indirizzo1' => 'indirizzo',
-        'tbana_citta' => 'citta',
-        'tbana_cap' => 'cap',
-        'tbana_provincia' => 'provincia',
-        'tbana_telefono1' => 'telefono',
-        'tbana_email' => 'email'
+
+
+    protected $table            = 'clienti';
+    protected $primaryKey       = 'id';
+
+    protected $allowedFields = [
+        'codice',
+        'nome',
+        'piva',
+        'indirizzo',
+        'citta',
+        'cap',
+        'provincia',
+        'telefono',
+        'email',
+        'note',
+        'contatti',
+        'id_external',
+        'dt_import',
+        'stato',
+        'created_at',
+        'updated_at',
+        'utente_import',
     ];
-    protected $transcodedFields = '';
-
-    protected $table            = 'nrg.v_tbcf_tbana';
-    protected $primaryKey       = 'tbana_id_pk';
-
     protected $returnType       = 'object';
 
-    /**
-     * Inizializza il modello e prepara i campi transcodificati
-     */
-    protected function initialize()
-    {
-        if ($this->transcoding) {
-            $fields = [];
-            foreach ($this->transcodingArray as $dbField => $alias) {
-                $fields[] = "$dbField as $alias";
-            }
-            $this->transcodedFields = implode(', ', $fields);
-        }
-    }
+
 
     /**
      * Genera l'elenco di tutti i clienti
@@ -46,10 +40,7 @@ class ClientiModel extends Model
 
     public function getClienti()
     {
-        return $this->select($this->transcodedFields)
-            ->orderBy('tbana_ragsoc1', 'ASC')
-            ->where('tbcf_tp', 'C')
-            ->findAll();
+        return $this->orderBy('nome', 'ASC')->findAll();
     }
 
     /**
@@ -57,11 +48,7 @@ class ClientiModel extends Model
      */
     public function getClientiByIds($idClienti)
     {
-        return $this->select($this->transcodedFields)
-            ->orderBy('tbana_ragsoc1', 'ASC')
-            ->where('tbcf_tp', 'C')
-            ->whereIn('tbana_id_pk', $idClienti)
-            ->findAll();
+        return $this->whereIn('id', $idClienti)->findAll();
     }
 
     /**
@@ -69,24 +56,17 @@ class ClientiModel extends Model
      */
     public function getInfoClienti()
     {
-        return $this->select('tbana_id_pk as id, tbana_ragsoc1 as nome')
-            ->orderBy('tbana_ragsoc1', 'ASC')
-            ->where('tbcf_tp', 'C')
+        return $this->select('id, nome')
+            ->orderBy('nome', 'ASC')
             ->findAll();
     }
 
     public function getClientiById($id)
     {
 
-        return $this->select($this->transcodedFields)
-            ->orderBy('tbana_ragsoc1', 'ASC')
-            ->where('tbcf_tp', 'C')
-            ->where('tbana_id_pk', $id)
+        return $this->orderBy('nome', 'ASC')
+            ->where('id', $id)
             ->first();
     }
 
-    public function getForImport()
-    {
-        return $this->where('tbcf_tp', 'C')->findAll();
-    }
 }

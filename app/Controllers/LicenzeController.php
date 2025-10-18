@@ -25,7 +25,7 @@ class LicenzeController extends BaseController
         $aggiornamenti = $this->AggiornamentiModel->getLastAggiornamenti();
         foreach ($licenze as $licenza) {
             // Trova il cliente corrispondente per ogni licenza
-            $cliente = array_filter($clienti, fn($c) => $c->id === $licenza->id_cli_ext);
+            $cliente = array_filter($clienti, fn($c) => $c->id === $licenza->clienti_id);
             $ultimo_agg = array_filter($aggiornamenti, fn($a) => $a->licenza_id === $licenza->id);
             $licenza->clienteNome = $cliente ? array_values($cliente)[0]->nome : 'Cliente non trovato';
             $licenza->clienteId = $cliente ? array_values($cliente)[0]->id : null;           
@@ -95,7 +95,7 @@ class LicenzeController extends BaseController
 
 
         $licenza = $this->LicenzeModel->getLicenzeById($idLicenza);
-        $idCliente = $licenza->id_cli_ext; // Ottengo l'ID del cliente associato alla licenza
+        $idCliente = $licenza->clienti_id; // Ottengo l'ID del cliente associato alla licenza
         $codice =  $licenza->codice;
         //$backTo = 
         $data = [
@@ -131,7 +131,7 @@ class LicenzeController extends BaseController
         if ($idCliente === null) {
             return redirect()->back()->with('error', 'Selezionare un cliente!.');
         } else {
-            $data['id_cli_ext'] = $idCliente; // Associa la licenza al cliente
+            $data['clienti_id'] = $idCliente; // Associa la licenza al cliente
         }
         if ($idLicenza !== null) {
             $data['id'] = $idLicenza; // Se sto modificando, aggiungo l'ID della licenza

@@ -25,14 +25,14 @@
         <?php if (!empty($clienti) && is_array($clienti)): ?>
             <?php foreach ($clienti as $cliente): ?>
                 <tr>
+                    <td><?= esc($cliente->id_external) ?></td>
                     <td>
                         <?php if ($cliente->id): ?>
-                            <span class="badge bg-success"><?= esc($cliente->id_external) ?></span>
+                            <span class="badge bg-success"><?= esc($cliente->id) ?></span>
                         <?php else: ?>
                             <span class="badge bg-primary">Nuovo</span>
                         <?php endif; ?>
                     </td>
-                    <td><?= esc($cliente->id) ?></td>
                     <td><?= esc($cliente->codice) ?></td>
                     <td><?= esc($cliente->nome) ?></td>
                     <td><?= esc($cliente->piva) ?></td>

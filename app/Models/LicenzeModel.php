@@ -9,7 +9,7 @@ class LicenzeModel extends Model
     protected $table            = 'licenze';
     protected $primaryKey       = 'id';
     protected $allowedFields = [
-        'id_cli_ext',
+        'clienti_id',
         'codice',
         'figlio_sn',
         'padre_lic_id',
@@ -52,8 +52,8 @@ class LicenzeModel extends Model
 
     public function getLicenzeByCliente($idCliente)
     {
-        log_message('info', 'Recupero le licenze per il cliente con ID: ' . $idCliente . 'e ottengo: ' . print_r($this->where('id_cli_ext', $idCliente)->findAll(), true));
-        return $this->where('id_cli_ext', $idCliente)->findAll();
+        log_message('info', 'Recupero le licenze per il cliente con ID: ' . $idCliente . 'e ottengo: ' . print_r($this->where('clienti_id', $idCliente)->findAll(), true));
+        return $this->where('clienti_id', $idCliente)->findAll();
     }
 
     public function getLicenzeById($idLicenza)
@@ -64,7 +64,7 @@ class LicenzeModel extends Model
     public function getLicenzeByTipo($tipoLicenza)
     {
 
-        $idClientiPerLicenza = $this->select('id_cli_ext')
+        $idClientiPerLicenza = $this->select('clienti_id')
             ->distinct()
             ->where('tipo', $tipoLicenza)
             ->findAll();
@@ -74,7 +74,7 @@ class LicenzeModel extends Model
 
     public function geTipoLicenzeByCliente()
     {
-        $tipoLicenzaPerCliente = $this->select('id_cli_ext, tipo')
+        $tipoLicenzaPerCliente = $this->select('clienti_id, tipo')
             ->distinct()
             ->findAll();
         log_message('info', 'tipoLicenzaPerCliente: ' . print_r($tipoLicenzaPerCliente, true));

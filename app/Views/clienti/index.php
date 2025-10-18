@@ -30,7 +30,7 @@
                             <tbody>
                                 <?php foreach ($clienti as $cliente): ?>
                                     <tr>
-                                        <td><?= esc($cliente->codice_cliente) ?></td>
+                                        <td><?= esc($cliente->codice) ?></td>
                                         <td><?= esc($cliente->nome) ?></td>
                                         <td><?= esc($cliente->email) ?></td>
                                         <td><?= esc($cliente->telefono) ?></td>
