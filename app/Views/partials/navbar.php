@@ -31,7 +31,7 @@ $siteName = $config->siteName ?? 'MeTe Licenze';
                         <li><a class="dropdown-item" href="<?= base_url('utenti/') ?>">Utenti</a></li>
                         <li><a class="dropdown-item" href="<?= base_url('admin/settings') ?>">Impostazioni App</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="<?= base_url('admin/import') ?>">Importa Dati</a></li>
+                        <li><a class="dropdown-item" href="<?= base_url('admin/import_clienti') ?>">Importa Clienti</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="<?= base_url('database/log') ?>">Log Database</a></li>
                     </ul>

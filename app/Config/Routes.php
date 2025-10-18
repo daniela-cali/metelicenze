@@ -89,8 +89,8 @@ $routes->group('utenti', ['filter' => 'group:superadmin,admin'], function($route
 });
 
 $routes->group('admin', ['filter' => 'group:superadmin,admin'], function($routes) {
-    $routes->get('import', 'Admin\ImportController::index');  
-    $routes->post('import/process', 'Admin\ImportController::processImport');
+    $routes->get('import_clienti', 'Admin\ImportClientiController::index');  
+    $routes->post('import_clienti', 'Admin\ImportClientiController::importClienti');
     $routes->get('settings', 'Admin\SettingsController::index');
     $routes->post('settings/save', 'Admin\SettingsController::save'); 
 });

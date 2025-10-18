@@ -1,10 +1,19 @@
 <div class="toast-container position-fixed top-0 start-50 translate-middle p-3 mt-5" style="z-index: 1100;">
-<?php $alert = session('alert'); ?>
-    <?php if (is_array($alert) && isset($alert['type'], $alert['message'])): ?>
-        <div class="toast align-items-center text-bg-<?= esc($alert['type']) ?> border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
+
+    <?php if (session('success')): ?>
+        <div class="toast align-items-center text-bg-success ?> border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="d-flex">
                 <div class="toast-body">
-                    <?= $alert['message'] ?>
+                    <?= session('success'); ?>
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+      <?php elseif (session('error')): ?>
+        <div class="toast align-items-center text-bg-danger ?> border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    <?= session('error'); ?>
                 </div>
                 <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
