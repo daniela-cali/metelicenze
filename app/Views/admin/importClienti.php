@@ -7,7 +7,7 @@
         <i class="bi bi-upload"></i> Importa Clienti
     </button>
 </form>
-<table id="importTable" class="table table-striped datatable">
+<table id="importTable" class="table table-striped">
     <thead>
         <tr>
             <th>ID Ext.</th>
@@ -33,7 +33,7 @@
                         <?php endif; ?>
                     </td>
                     <td><?= esc($cliente->id) ?></td>
-                    <td><?= esc($cliente->codice_cliente) ?></td>
+                    <td><?= esc($cliente->codice) ?></td>
                     <td><?= esc($cliente->nome) ?></td>
                     <td><?= esc($cliente->piva) ?></td>
                     <td><?= esc($cliente->indirizzo) ?></td>
@@ -49,4 +49,13 @@
         <?php endif; ?>
     </tbody>
 </table>
+<?= $this->endSection() ?>
+<?= $this->section('scripts') ?>
+<script>
+$(document).ready(function () {
+    if (!$.fn.DataTable.isDataTable('#importTable')) {
+        $('#importTable').DataTable(datatableDefaults);
+    }
+});
+</script>
 <?= $this->endSection() ?>

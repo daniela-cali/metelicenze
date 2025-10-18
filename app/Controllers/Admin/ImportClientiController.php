@@ -10,7 +10,7 @@ class ImportClientiController extends BaseController
 {
     public function index()
     {
-        $data['title'] = 'Importa Dati';
+        $data['title'] = 'Importa Clienti';
         $clientiModel = new ClientiImportModel();
         $data['clienti'] = $clientiModel->getRecordsetForImport();
         log_message('info', 'Clienti per importazione: ' . print_r($data['clienti'], true));
