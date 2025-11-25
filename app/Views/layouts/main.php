@@ -4,6 +4,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MeTe Licenze - Gestione licenze software per la tua azienda">
+  <meta name="author" content="MeTe Software">
+  <meta name="keywords" content="MeTe, Licenze, Software, Gestione, Azienda">
+  <!-- Open Graph / Facebook -->
+  <meta name="og:title" content="MeTe Licenze">
+  <meta name="og:description" content="Gestione licenze software per la tua azienda">
+  <meta name="og:type" content="website">
+  <meta name="og:url" content="<?= base_url() ?>">
+  <meta name="og:image" content="<?= base_url('assets/images/og-image.png') ?>">
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MeTe Licenze">
+  <meta name="twitter:description" content="Gestione licenze software per la tua azienda">
+  <meta name="twitter:image" content="<?= base_url('assets/images/twitter-card.png') ?>">
+  
+
   <title><?= esc($title ?? 'MeTe Licenze') ?></title>
 
   <!-- Bootstrap CSS -->

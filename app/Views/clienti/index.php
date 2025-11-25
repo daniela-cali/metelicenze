@@ -10,10 +10,51 @@
 
             </div>
             <div class="card-body">
+                <div class="container">
 
-                <?php if (!empty($clienti)): ?>
 
-                    <div class="table-responsive">
+                    <div class="row">
+                        <div class="col">
+                            <div class="d-flex justify-content-end align-items-center gap-3" id="tipi">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="tipi" value="Sigla"
+                                        id="tipoSigla">
+                                    <label class="form-check-label" for="tipoSigla">Sigla</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="tipi" value="VarHub"
+                                        id="tipoVarHub">VarHub
+                                    <label class="form-check-label" for="tipoVarHub">Sigla</label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" name="tipi" value="SKNT" id="tipoSKNT">
+                                    <label class="form-check-label" for="tipoSKNT">SKNT</label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="col">
+                            <div class="d-flex justify-content-end align-items-center gap-3" id="licenze">
+                                <div class="form-check">
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="licenze" value="si"
+                                            id="licenzeSi" checked>
+                                        <label class="form-check-label" for="licenzeSi">Con Licenze attive</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="licenze" value="no"
+                                            id="licenzeNo">
+                                        <label class="form-check-label" for="licenzeNo">Senza Licenze attive</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+
+                    <?php if (!empty($clienti)): ?>
+
                         <table class="table table-striped table-hover align-middle datatable" id="clientiTable">
                             <thead class="table-light">
                                 <tr>
@@ -48,12 +89,13 @@
                                         </td>
                                         <td>
                                             <?php // Visualizzo i tipi di licenze come lista
-                                            foreach ($cliente->tipiLicenze as $tipo): ?>                                            
+                                            foreach ($cliente->tipiLicenze as $tipo): ?>
                                                 <span class="badge bg-transparent text-dark mb-1"><?= esc($tipo) ?></span>
                                             <?php endforeach; ?>
                                         </td>
                                         <td>
-                                            <a href="/clienti/schedaCliente/<?= $cliente->id ?>" class="btn btn-sm btn-outline-primary" title="Scheda Cliente">
+                                            <a href="/clienti/schedaCliente/<?= $cliente->id ?>"
+                                                class="btn btn-sm btn-outline-primary" title="Scheda Cliente">
                                                 <i class="bi bi-person-vcard"></i>
                                             </a>
 
@@ -62,18 +104,56 @@
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
-                    </div>
-                <?php else: ?>
-                    <div class="alert alert-info">
-                        <i class="bi bi-info-circle"></i> Nessun cliente trovato nel database.
-                    </div>
-                <?php endif; ?>
+                </div>
+            <?php else: ?>
+                <div class="alert alert-info">
+                    <i class="bi bi-info-circle"></i> Nessun cliente trovato nel database.
+                </div>
+            <?php endif; ?>
             </div>
         </div>
 </div>
 <?= $this->endSection() ?>
 <?= $this->section('scripts') ?>
 <script>
+$(document).ready(function () {
+    // inizializza la DataTable 
+    const table = $('#clientiTable').DataTable($.extend(true, {}, datatableDefaults, { order: [] }));
 
+    // filtro custom: licenze + tipi
+    $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
+        if (settings.nTable.id !== 'clientiTable') return true;
+
+        // --- filtro "licenze" (colonna N° index 5)
+        const licenzeVal = $('input[name="licenze"]:checked').val(); // 'si'|'no'|undefined
+        const rowNode = table.row(dataIndex).node();
+        const numLicenzeText = $(rowNode).find('td').eq(5).text().trim();
+        const numLicenze = parseInt(numLicenzeText.replace(/\D/g, '')) || 0; // estrai numero
+        if (licenzeVal === 'si' && numLicenze <= 0) return false;
+        if (licenzeVal === 'no' && numLicenze > 0) return false;
+
+        // --- filtro "tipi" (colonna Tipi index 6)
+        const selectedTipi = $('input[name="tipi"]:checked').map(function(){ return $(this).val(); }).get();
+        if (selectedTipi.length === 0) return true; // nessun filtro tipi
+        const tipiCellText = $(rowNode).find('td').eq(6).text().trim();
+        // includi se ALMENO un tipo selezionato è presente nella cella (OR)
+        return selectedTipi.some(t => tipiCellText.indexOf(t) !== -1);
+    });
+
+    // quando cambia un filtro, ridisegna la tabella 
+    $('input[name="tipi"]').on('change', function() {
+        $(":radio[value=no][name=licenze]").prop("checked", false);
+        $(":radio[value=si][name=licenze]").prop("checked", true);
+        table.draw();
+    });
+    $('input[name="licenze"]').on('change', function() {
+        //leggo il valore selezionato e disabilito le checkbox dei tipi se "no" per coerenza di interfaccia
+        let val = this.value;
+        if (val == 'no') {
+            $('input[name="tipi"]').prop('checked', false);
+        }
+        table.draw();
+    });
+});
 </script>
 <?= $this->endSection() ?>

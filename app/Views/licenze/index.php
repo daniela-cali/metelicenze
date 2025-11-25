@@ -13,7 +13,7 @@
             log_message('info', 'View licenze index variabile licenze' . print_r($licenze, true));
             if (!empty($licenze)): ?>
                 <div class="table-responsive">
-                    <table class="table table-striped table-hover align-middle datatable">
+                    <table class="table table-striped table-hover align-middle" id="licenzeTable">
                         <thead class="table-light">
                             <tr>
                                 <th>ID Licenza</th>
@@ -94,4 +94,12 @@
         </div>
     </div>
 </div>
+<?= $this->endSection() ?>
+<?= $this->section('scripts') ?>
+<script>
+$(document).ready(function () {
+    // inizializza la DataTable 
+    const table = $('#licenzeTable').DataTable($.extend(true, {}, datatableDefaults, { order: [] }));
+});
+</script>
 <?= $this->endSection() ?>

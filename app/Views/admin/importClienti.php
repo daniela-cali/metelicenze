@@ -7,7 +7,7 @@
         <i class="bi bi-upload"></i> Importa Clienti
     </button>
 </form>
-<table id="importTable" class="table table-striped">
+<table id="importTable" class="table table-striped datatable">
     <thead>
         <tr>
             <th>ID Ext.</th>
@@ -53,8 +53,8 @@
 <?= $this->section('scripts') ?>
 <script>
 $(document).ready(function () {
-    if (!$.fn.DataTable.isDataTable('#importTable')) {
-        $('#importTable').DataTable(datatableDefaults);
+    if (!$.fn.DataTable.isDataTable('.datatable')) {
+        $('.datatable').DataTable(datatableDefaults);
     }
 });
 </script>

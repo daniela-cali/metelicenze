@@ -40,7 +40,7 @@ class ClientiController extends BaseController
 
         return view('clienti/index', $data);
     }
-    public function index()
+    public function index(): string
     {
 
         $data['clienti'] = $this->ClientiModel->getClienti();

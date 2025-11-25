@@ -136,6 +136,10 @@ class LicenzeController extends BaseController
         if ($idLicenza !== null) {
             $data['id'] = $idLicenza; // Se sto modificando, aggiungo l'ID della licenza
         }
+        if ($data['tipo'] === 'VarHub') {
+            // Per VarHub, imposto codice = ad ambiente
+            $data['codice'] = $data['ambiente'];
+        }
         log_message('info', 'Ricevo questo idcliente: ' . $idCliente . ' e idlicenza: ' . $idLicenza);
         log_message('info', 'Data contiene questo prima di inviare al model ->salva: ' . print_r($data, true));
         // Salvo la licenza nel database
