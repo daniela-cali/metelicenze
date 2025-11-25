@@ -1,128 +1,107 @@
-#-------------------------
-# Operating Specific Junk Files
-#-------------------------
+#---------------------------------------
+#   Operating System Junk Files
+#---------------------------------------
 
-# OS X
+# macOS
 .DS_Store
 .AppleDouble
 .LSOverride
-
-# OS X Thumbnails
 ._*
 
-# Windows image file caches
+# Windows
 Thumbs.db
 ehthumbs.db
 Desktop.ini
-
-# Recycle Bin used on file shares
 $RECYCLE.BIN/
-
-# Windows Installer files
-*.cab
-*.msi
-*.msm
-*.msp
-
-# Windows shortcuts
 *.lnk
 
 # Linux
 *~
-
-# KDE directory preferences
 .directory
-
-# Linux trash folder which might appear on any partition or disk
 .Trash-*
 
-#-------------------------
-# Environment Files
-#-------------------------
-# These should never be under version control,
-# as it poses a security risk.
-.env
+#---------------------------------------
+#   Environment Files (important)
+#---------------------------------------
+
+# Never commit environment configuration
+.env_fottuto
+*.env
+mg.env
 .vagrant
-Vagrantfile
+!.env.example
 
-#-------------------------
-# Temporary Files
-#-------------------------
-writable/cache/*
-!writable/cache/index.html
+#---------------------------------------
+#   Composer
+#---------------------------------------
 
+vendor/
+composer.lock
+
+#---------------------------------------
+#   CodeIgniter 4 writable/ directory
+#---------------------------------------
+# (CI4 writes logs, cache, sessions, etc. here)
+
+writable/*
+!writable/index.html
+!writable/.htaccess
+
+# Logs
 writable/logs/*
 !writable/logs/index.html
 
+# Cache
+writable/cache/*
+!writable/cache/index.html
+
+# Sessions
 writable/session/*
 !writable/session/index.html
 
-writable/uploads/*
-!writable/uploads/index.html
+# Uploads (if used)
+public/uploads/*
+!public/uploads/index.html
 
-writable/debugbar/*
-!writable/debugbar/index.html
+#---------------------------------------
+#   Public assets (optional rules)
+#---------------------------------------
 
-php_errors.log
+# Ignore build artifacts
+public/assets/build/
+public/assets/cache/
 
-#-------------------------
-# User Guide Temp Files
-#-------------------------
-user_guide_src/build/*
-user_guide_src/cilexer/build/*
-user_guide_src/cilexer/dist/*
-user_guide_src/cilexer/pycilexer.egg-info/*
+#---------------------------------------
+#   Node / Front-end Tools
+#---------------------------------------
 
-#-------------------------
-# Test Files
-#-------------------------
-tests/coverage*
+node_modules/
+npm-debug.log
+yarn.lock
+package-lock.json
 
-# Don't save phpunit under version control.
-phpunit
+#---------------------------------------
+#   IDE / Editor Config Files
+#---------------------------------------
 
-#-------------------------
-# Composer
-#-------------------------
-vendor/
-
-#-------------------------
-# IDE / Development Files
-#-------------------------
-
-# Modules Testing
-_modules/*
-
-# phpenv local config
-.php-version
-
-# Jetbrains editors (PHPStorm, etc)
 .idea/
-*.iml
-
-# NetBeans
-/nbproject/
-/build/
-/nbbuild/
-/dist/
-/nbdist/
-/nbactions.xml
-/nb-configuration.xml
-/.nb-gradle/
-
-# Sublime Text
-*.tmlanguage.cache
-*.tmPreferences.cache
-*.stTheme.cache
-*.sublime-workspace
-*.sublime-project
-.phpintel
-/api/
-
-# Visual Studio Code
 .vscode/
+*.swp
+*.swo
 
-/results/
-/phpunit*.xml
-__*
+#---------------------------------------
+#   Temporary / Backup Files
+#---------------------------------------
 
+*.bak
+*.backup
+*.old
+*.tmp
+*.orig
+
+#---------------------------------------
+#   Git Backup Files (auto-generated)
+#---------------------------------------
+
+*.orig
+*.rej
