@@ -18,7 +18,7 @@
   <meta name="twitter:title" content="MeTe Licenze">
   <meta name="twitter:description" content="Gestione licenze software per la tua azienda">
   <meta name="twitter:image" content="<?= base_url('assets/images/twitter-card.png') ?>">
-  
+
 
   <title><?= esc($title ?? 'MeTe Licenze') ?></title>
 
@@ -40,6 +40,12 @@
 
   <!-- CSS personalizzato -->
   <link rel="stylesheet" href="<?= base_url('assets/css/custom.css') ?>">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="<?= base_url('assets/icons/favicon-32x32.png') ?>">
+  <link rel="icon" type="image/png" sizes="16x16" href="<?= base_url('assets/icons/favicon-16x16.png') ?>">
+  <link rel="shortcut icon" href="<?= base_url('assets/icons/favicon.ico') ?>">
+
 
   <?= $this->renderSection('styles') ?>
 </head>
@@ -110,4 +116,5 @@
   <!-- Script specifici pagina -->
   <?= $this->renderSection('scripts') ?>
 </body>
+
 </html>
