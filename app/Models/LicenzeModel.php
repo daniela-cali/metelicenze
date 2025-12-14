@@ -47,6 +47,7 @@ class LicenzeModel extends Model
 
         return $this->select('*')
             ->orderBy('codice', 'ASC')
+            
             ->findAll();
     }
 

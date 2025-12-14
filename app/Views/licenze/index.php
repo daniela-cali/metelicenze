@@ -4,12 +4,12 @@
     <div class="card shadow-sm">
         <div class="card-header bg-primary d-flex justify-content-between align-items-center">
             <h5 class="mb-0"><i class="bi bi-key"></i> Elenco Licenze</h5>
-            
+
             </a>
         </div>
         <div class="card-body">
-            
-            <?php 
+
+            <?php
             log_message('info', 'View licenze index variabile licenze' . print_r($licenze, true));
             if (!empty($licenze)): ?>
                 <div class="table-responsive">
@@ -28,7 +28,8 @@
                         </thead>
                         <tbody>
                             <?php foreach ($licenze as $licenza): ?>
-                                <tr>
+                                <?php $trClass = $licenza->stato == 0 ? 'class="table-danger"' : ''; ?>
+                                <tr <?= $trClass ?>>
                                     <td><?= esc($licenza->id) ?></td>
                                     <td><?= esc($licenza->codice) ?></td>
                                     <td><?= esc($licenza->tipo) ?></td>
@@ -38,7 +39,7 @@
                                     <td>
                                         <?php if ($licenza->ultimaVersione): ?>
                                             <span class="badge bg-success">
-                                               <i class="bi bi-check"></i>
+                                                <i class="bi bi-check"></i>
                                                 Aggiornato
                                             </span>
                                         <?php else: ?>
@@ -55,7 +56,12 @@
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                 <li>
-                                                    
+                                                    <a class="dropdown-item" href="<?= site_url('aggiornamenti/crea/' . $licenza->id) ?>">
+                                                        <i class="bi bi-clock-history"></i>
+                                                        Aggiornamento
+                                                    </a>
+                                                </li>
+                                                <li>
                                                     <a class="dropdown-item" href="<?= site_url('licenze/visualizza/' . $licenza->id) ?>">
                                                         <i class="bi bi-eye"></i>
                                                         Visualizza
@@ -97,9 +103,11 @@
 <?= $this->endSection() ?>
 <?= $this->section('scripts') ?>
 <script>
-$(document).ready(function () {
-    // inizializza la DataTable 
-    const table = $('#licenzeTable').DataTable($.extend(true, {}, datatableDefaults, { order: [] }));
-});
+    $(document).ready(function() {
+        // inizializza la DataTable 
+        const table = $('#licenzeTable').DataTable($.extend(true, {}, datatableDefaults, {
+            order: []
+        }));
+    });
 </script>
 <?= $this->endSection() ?>
