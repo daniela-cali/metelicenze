@@ -1,0 +1,8 @@
+username: metelicenze
+pwd: PasswordCazzutaCheDeviScegliereTu
+db: metelicenze
+
+Utente Daniela
+Pwd daniela.NRG.2019
+
+CREATE USER IF NOT EXISTS 'phpmyadmin'@'localhost' IDENTIFIED BY 'CK10cpNhildraPhpMyAdmin';
